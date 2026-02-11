@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-   
+    
     <style>
         .parallax-bg {
             background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2000');
@@ -18,7 +18,7 @@
         }
         .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
         .gradient-text { background: linear-gradient(90deg, #f97316, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-       
+        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
@@ -34,20 +34,33 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans selection:bg-orange-500/30" x-data="charityApp()">
     
-    <nav class="fixed top-0 w-full z-[80] px-6 py-4 pointer-events-none">
+    <nav class="fixed top-0 w-full z-[80] px-4 md:px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="glass px-4 py-2 rounded-full pointer-events-auto flex items-center gap-2">
+            <div class="glass px-4 py-2 rounded-full flex items-center gap-2">
                 <div class="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
                 <span class="font-bold tracking-tighter text-sm uppercase">Northern Hope</span>
             </div>
-            <div class="hidden md:flex glass px-6 py-2 rounded-full pointer-events-auto gap-6 text-sm font-medium">
+            
+            <div class="hidden md:flex glass px-6 py-2 rounded-full gap-6 text-sm font-medium">
                 <a href="impact.html" class="hover:text-orange-500 transition">Impact</a>
                 <a href="transparency.html" class="hover:text-orange-500 transition">Transparency Report</a>
                 <a href="donate.html" class="hover:text-orange-500 transition">Donate</a>
             </div>
-            <a href="donate.html" class="glass px-4 py-2 rounded-full pointer-events-auto text-sm font-bold text-orange-500 md:hidden">
-                Donate
-            </a>
+
+            <div class="flex md:hidden gap-2">
+                <a href="donate.html" class="glass px-4 py-2 rounded-full text-xs font-bold text-orange-500">
+                    Donate
+                </a>
+                <button @click="mobileMenu = !mobileMenu" class="glass px-4 py-2 rounded-full text-xs font-bold">
+                    <span x-text="mobileMenu ? '✕' : 'MENU'"></span>
+                </button>
+            </div>
+        </div>
+
+        <div x-show="mobileMenu" x-transition class="md:hidden mt-2 glass rounded-2xl p-4 flex flex-col gap-4 text-center text-sm pointer-events-auto">
+            <a href="impact.html" class="py-2 border-b border-white/5">Impact</a>
+            <a href="transparency.html" class="py-2 border-b border-white/5">Transparency Report</a>
+            <a href="donate.html" class="py-2 text-orange-500 font-bold">Donate Now</a>
         </div>
     </nav>
 
@@ -83,17 +96,17 @@
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-sad-child-looking-out-the-window-34440-large.mp4" type="video/mp4">
             </video>
         </div>
-       
+        
         <div class="relative z-20 text-center px-4 max-w-4xl">
             <span class="inline-block px-4 py-1 mb-4 border border-orange-500/50 rounded-full text-orange-500 text-sm font-bold tracking-widest uppercase animate__animated animate__fadeIn">Emergency Appeal 2026</span>
-            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight animate__animated animate__fadeInDown">
+            <h1 class="text-4xl md:text-8xl font-black mb-6 leading-tight animate__animated animate__fadeInDown">
                 Tonight, Children <span class="text-orange-500">Sleep Hungry.</span>
             </h1>
-            <p class="text-xl md:text-2xl mb-10 text-slate-300 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+            <p class="text-lg md:text-2xl mb-10 text-slate-300 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
                 A single meal costs less than your morning coffee, but it means the world to a child in the North.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate__animated animate__fadeInUp animate__delay-2s">
-                <a href="#donate" class="w-full sm:w-auto px-10 py-4 bg-orange-600 hover:bg-orange-500 rounded-full font-bold transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)]">🔶 Donate Now</a>
+                <a href="#donate" class="w-full sm:w-auto px-10 py-4 bg-orange-600 hover:bg-orange-500 rounded-full font-bold transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] text-center">🔶 Donate Now</a>
                 <button @click="showCashAppGuide = true" class="w-full sm:w-auto px-10 py-4 border border-white/20 hover:bg-white/10 rounded-full font-bold transition-all">How to use CashApp</button>
             </div>
         </div>
@@ -121,8 +134,8 @@
         <div class="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
             <template x-for="stat in stats">
                 <div class="group transition-transform hover:-translate-y-2">
-                    <div class="text-5xl md:text-6xl font-black text-orange-500 mb-2 drop-shadow-2xl" x-text="stat.current">0</div>
-                    <div class="text-slate-500 uppercase tracking-tighter font-bold text-xs md:text-sm" x-text="stat.label"></div>
+                    <div class="text-4xl md:text-6xl font-black text-orange-500 mb-2 drop-shadow-2xl" x-text="stat.current">0</div>
+                    <div class="text-slate-500 uppercase tracking-tighter font-bold text-[10px] md:text-sm" x-text="stat.label"></div>
                 </div>
             </template>
         </div>
@@ -135,7 +148,7 @@
                     <h2 class="text-4xl font-bold mb-6">Where your <span class="text-blue-500">money</span> goes.</h2>
                     <p class="text-slate-400 mb-8 leading-relaxed">We believe in radical transparency. Using blockchain for donations ensures that every cent is tracked from your wallet to the child's plate.</p>
                     
-                    <div class="flex items-center gap-8">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="w-48 h-48 relative">
                             <canvas id="transparencyChart"></canvas>
                         </div>
@@ -162,7 +175,7 @@
                         <template x-for="donor in donorWall">
                             <div class="donor-card glass p-5 rounded-2xl flex justify-between items-center">
                                 <div>
-                                    <p class="font-bold text-white" x-text="donor.name"></p>
+                                    <p class="font-bold text-white text-sm md:text-base" x-text="donor.name"></p>
                                     <p class="text-xs text-slate-400 italic" x-text="'&quot;' + donor.message + '&quot;'"></p>
                                 </div>
                                 <div class="text-right">
@@ -179,12 +192,12 @@
 
     <section id="donate" class="py-24 container mx-auto px-6">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
-           
+            
             <div class="space-y-12">
                 <div>
-                    <h2 class="text-5xl font-bold mb-6">Take <span class="text-blue-500">Action.</span></h2>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Take <span class="text-blue-500">Action.</span></h2>
                     <p class="text-slate-400 text-lg mb-4">Your contribution goes directly to the field. 100% of BTC donations bypass traditional banking fees.</p>
-                    <button @click="showCashAppGuide = true" class="text-orange-500 font-bold flex items-center gap-2 hover:underline">
+                    <button @click="showCashAppGuide = true" class="text-orange-500 font-bold flex items-center gap-2 hover:underline text-left">
                         Need help with Cash App? View Guide →
                     </button>
                 </div>
@@ -194,7 +207,7 @@
                         <span class="text-orange-500 font-mono" x-text="'$' + calcAmount"></span>
                     </div>
                     <input type="range" min="5" max="1000" x-model="calcAmount" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-orange-500 mb-8">
-                   
+                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5">
                             <p class="text-2xl font-bold" x-text="Math.floor(calcAmount / 2)"></p>
@@ -231,7 +244,7 @@
             <form @submit.prevent="submitDonation" class="glass p-8 md:p-12 rounded-[2rem] border border-white/10 shadow-2xl space-y-6 lg:sticky lg:top-24">
                 <h3 class="text-3xl font-bold italic">Verification Portal</h3>
                 <p class="text-sm text-slate-400">After sending your BTC, enter your details below. We use this to verify the hash and add you to the global donor wall.</p>
-               
+                
                 <div class="space-y-4">
                     <div class="grid md:grid-cols-2 gap-4">
                         <input name="user_name" type="text" placeholder="Public Display Name" class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
@@ -244,7 +257,7 @@
                     <textarea name="message" placeholder="A word of hope for the children..." class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl h-24 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
                 </div>
                 <button type="submit"
-                    class="w-full bg-orange-600 hover:bg-orange-500 py-5 rounded-2xl font-black text-xl transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
+                    class="w-full bg-orange-600 hover:bg-orange-500 py-5 rounded-2xl font-black text-lg md:text-xl transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
                     :disabled="loading">
                     <span x-show="!loading">Verify & Submit Relief</span>
                     <span x-show="loading" class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></span>
@@ -256,9 +269,10 @@
             </form>
         </div>
     </section>
-    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
+    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm px-4">
         <p>&copy; 2026 Northern Hope NGO. Registered Charity #8829-10. Working with UN Global Pulse.</p>
     </footer>
+
     <script>
         (function() {
             emailjs.init("YOUR_PUBLIC_KEY");
@@ -269,8 +283,8 @@
                 btcPrice: 0,
                 loading: false,
                 showCashAppGuide: false,
+                mobileMenu: false, // Added for mobile menu visibility
                 donorWall: [],
-                // Real-world Image Gallery Data
                 gallery: [
                     { url: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600', location: 'Turkana Sector', caption: 'Weekly Grain Distribution' },
                     { url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600', location: 'Northern Hub', caption: 'Clean Water Initiative' },
