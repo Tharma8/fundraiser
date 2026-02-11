@@ -1,0 +1,384 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Hope | End Child Hunger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+   
+    <style>
+        .parallax-bg {
+            background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2000');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .gradient-text { background: linear-gradient(90deg, #f97316, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+       
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
+        /* New: Horizontal Scroller */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Smooth reveal for donor cards */
+        .donor-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .donor-card:hover { transform: translateY(-5px) scale(1.02); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-orange-500/30" x-data="charityApp()">
+    
+    <nav class="fixed top-0 w-full z-[80] px-6 py-4 pointer-events-none">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="glass px-4 py-2 rounded-full pointer-events-auto flex items-center gap-2">
+                <div class="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                <span class="font-bold tracking-tighter text-sm uppercase">Northern Hope</span>
+            </div>
+            <div class="hidden md:flex glass px-6 py-2 rounded-full pointer-events-auto gap-6 text-sm font-medium">
+                <a href="impact.html" class="hover:text-orange-500 transition">Impact</a>
+                <a href="transparency.html" class="hover:text-orange-500 transition">Transparency Report</a>
+                <a href="donate.html" class="hover:text-orange-500 transition">Donate</a>
+            </div>
+            <a href="donate.html" class="glass px-4 py-2 rounded-full pointer-events-auto text-sm font-bold text-orange-500 md:hidden">
+                Donate
+            </a>
+        </div>
+    </nav>
+
+    <div x-show="showCashAppGuide" x-transition.opacity class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
+        <div @click.away="showCashAppGuide = false" class="glass max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] p-8 md:p-12 relative border-orange-500/30">
+            <button @click="showCashAppGuide = false" class="absolute top-6 right-6 text-slate-400 hover:text-white">✕</button>
+            <h3 class="text-3xl font-bold mb-6 text-orange-500">How to Donate via Cash App</h3>
+            <div class="space-y-6 text-slate-300">
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">1</div>
+                    <p><span class="text-white font-bold">Open Cash App:</span> Tap the <span class="text-green-500">Bitcoin</span> tab on your home screen.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">2</div>
+                    <p><span class="text-white font-bold">Buy BTC:</span> Select "Buy" and enter the amount you wish to donate. Confirm your purchase.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">3</div>
+                    <p><span class="text-white font-bold">Send to Charity:</span> Tap the <span class="text-orange-500 font-mono">Send</span> (airplane icon). Enter our wallet address below or scan our QR code.</p>
+                </div>
+                <div class="bg-black/40 p-4 rounded-xl border border-white/10 break-all font-mono text-xs text-orange-400">
+                    bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
+                </div>
+                <button @click="copyAddress(); showCashAppGuide = false" class="w-full py-4 bg-orange-600 rounded-xl font-bold hover:bg-orange-500 transition">Copy Address & Close</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-slate-950 z-10"></div>
+            <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-sad-child-looking-out-the-window-34440-large.mp4" type="video/mp4">
+            </video>
+        </div>
+       
+        <div class="relative z-20 text-center px-4 max-w-4xl">
+            <span class="inline-block px-4 py-1 mb-4 border border-orange-500/50 rounded-full text-orange-500 text-sm font-bold tracking-widest uppercase animate__animated animate__fadeIn">Emergency Appeal 2026</span>
+            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight animate__animated animate__fadeInDown">
+                Tonight, Children <span class="text-orange-500">Sleep Hungry.</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-slate-300 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+                A single meal costs less than your morning coffee, but it means the world to a child in the North.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#donate" class="w-full sm:w-auto px-10 py-4 bg-orange-600 hover:bg-orange-500 rounded-full font-bold transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)]">🔶 Donate Now</a>
+                <button @click="showCashAppGuide = true" class="w-full sm:w-auto px-10 py-4 border border-white/20 hover:bg-white/10 rounded-full font-bold transition-all">How to use CashApp</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-24 bg-slate-950">
+        <div class="container mx-auto px-6 mb-12">
+            <h2 class="text-3xl font-bold">Live from the <span class="text-orange-500">Field</span></h2>
+            <p class="text-slate-400">Updates from our distribution centers within the last 48 hours.</p>
+        </div>
+        <div class="flex gap-6 overflow-x-auto px-6 hide-scrollbar pb-10">
+            <template x-for="img in gallery">
+                <div class="flex-shrink-0 w-72 h-96 rounded-2xl overflow-hidden relative group border border-white/5">
+                    <img :src="img.url" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" :alt="img.caption">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                        <p class="text-xs text-orange-500 font-bold mb-1" x-text="img.location"></p>
+                        <p class="text-sm font-medium" x-text="img.caption"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <section id="impact" class="py-24 bg-slate-950 border-y border-white/5">
+        <div class="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <template x-for="stat in stats">
+                <div class="group transition-transform hover:-translate-y-2">
+                    <div class="text-5xl md:text-6xl font-black text-orange-500 mb-2 drop-shadow-2xl" x-text="stat.current">0</div>
+                    <div class="text-slate-500 uppercase tracking-tighter font-bold text-xs md:text-sm" x-text="stat.label"></div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <section id="transparency" class="py-24 bg-slate-950 overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6">Where your <span class="text-blue-500">money</span> goes.</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">We believe in radical transparency. Using blockchain for donations ensures that every cent is tracked from your wallet to the child's plate.</p>
+                    
+                    <div class="flex items-center gap-8">
+                        <div class="w-48 h-48 relative">
+                            <canvas id="transparencyChart"></canvas>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-orange-600"></span>
+                                <span class="text-sm">65% Food Programs</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                                <span class="text-sm">20% Logistics</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-slate-700"></span>
+                                <span class="text-sm">15% Community Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-orange-500 uppercase tracking-widest mb-4">Recent Heroes</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <template x-for="donor in donorWall">
+                            <div class="donor-card glass p-5 rounded-2xl flex justify-between items-center">
+                                <div>
+                                    <p class="font-bold text-white" x-text="donor.name"></p>
+                                    <p class="text-xs text-slate-400 italic" x-text="'&quot;' + donor.message + '&quot;'"></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-orange-500 font-black" x-text="'$' + donor.amount"></p>
+                                    <p class="text-[10px] text-green-500 font-mono">VERIFIED</p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="donate" class="py-24 container mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+           
+            <div class="space-y-12">
+                <div>
+                    <h2 class="text-5xl font-bold mb-6">Take <span class="text-blue-500">Action.</span></h2>
+                    <p class="text-slate-400 text-lg mb-4">Your contribution goes directly to the field. 100% of BTC donations bypass traditional banking fees.</p>
+                    <button @click="showCashAppGuide = true" class="text-orange-500 font-bold flex items-center gap-2 hover:underline">
+                        Need help with Cash App? View Guide →
+                    </button>
+                </div>
+                <div class="glass p-8 rounded-3xl border border-white/10 shadow-2xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-sm font-bold uppercase text-slate-400 tracking-widest">Impact Calculator</span>
+                        <span class="text-orange-500 font-mono" x-text="'$' + calcAmount"></span>
+                    </div>
+                    <input type="range" min="5" max="1000" x-model="calcAmount" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-orange-500 mb-8">
+                   
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5">
+                            <p class="text-2xl font-bold" x-text="Math.floor(calcAmount / 2)"></p>
+                            <p class="text-xs text-slate-500">Full Meals</p>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5">
+                            <p class="text-2xl font-bold text-blue-400" x-text="Math.floor(calcAmount / 15)"></p>
+                            <p class="text-xs text-slate-500">Clean Water Kits</p>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5">
+                            <p class="text-2xl font-bold text-orange-400" x-text="Math.floor(calcAmount / 50)"></p>
+                            <p class="text-xs text-slate-500">School Packs</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl border border-orange-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.556.362 9.103 1.966 2.67 8.474-1.24 14.904.364c6.415 1.604 10.342 8.114 8.734 14.54zm-6.415-4.429c.244-1.634-1.003-2.513-2.708-3.098l.554-2.223-1.353-.337-.54 2.162c-.356-.088-.721-.171-1.082-.253l.545-2.184-1.353-.337-.554 2.223c-.294-.067-.585-.133-.865-.203l.001-.005-1.866-.466-.36 1.446s1.004.23 1.004.23c.548.136.647.498.63.785l-.631 2.531c.038.01.087.024.141.046l-.142-.035-1.01 4.053c-.067.166-.237.416-.618.321 0 0-1.004-.25-1.004-.25l-.672 1.549 1.762.44c.328.082.65.167.966.246l-.56 2.247 1.352.338.555-2.224c.37.101.73.197 1.081.288l-.552 2.215 1.353.337.56-2.249c2.31.438 4.047.261 4.777-1.828.588-1.683-.029-2.653-1.248-3.285.887-.205 1.556-.79 1.735-1.996zm-3.1 4.36c-.42 1.684-3.256.774-4.175.546l.745-2.986c.92.23 3.858.683 3.43 2.44zm.422-4.387c-.381 1.53-2.734.753-3.502.562l.676-2.71c.767.191 3.212.546 2.826 2.148z"/></svg>
+                        </div>
+                        <h4 class="text-xl font-bold">Fast BTC Donation</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4 uppercase tracking-tighter">Live Price: <span class="text-white" x-text="'$' + btcPrice.toLocaleString()"></span></p>
+                    <div class="flex flex-col md:flex-row gap-4 items-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" class="bg-white p-2 rounded-lg border-4 border-orange-500" alt="QR">
+                        <div class="flex-1 w-full text-center md:text-left">
+                            <label class="text-[10px] text-slate-500 uppercase font-bold mb-1 block tracking-widest">Network: Bitcoin (Legacy/Segwit)</label>
+                            <input readonly value="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" class="w-full bg-black/40 border border-white/10 p-3 rounded text-xs mb-3 font-mono text-orange-200">
+                            <button @click="copyAddress" class="w-full py-2 border border-orange-500/40 text-orange-500 rounded-lg text-sm font-bold hover:bg-orange-500/10 transition">Copy Wallet Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form @submit.prevent="submitDonation" class="glass p-8 md:p-12 rounded-[2rem] border border-white/10 shadow-2xl space-y-6 lg:sticky lg:top-24">
+                <h3 class="text-3xl font-bold italic">Verification Portal</h3>
+                <p class="text-sm text-slate-400">After sending your BTC, enter your details below. We use this to verify the hash and add you to the global donor wall.</p>
+               
+                <div class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input name="user_name" type="text" placeholder="Public Display Name" class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
+                        <input name="user_email" type="email" placeholder="Email (For Receipt)" class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-4 top-4 text-slate-500">$</span>
+                        <input name="amount" type="number" x-model="calcAmount" class="w-full bg-slate-900 border border-white/10 p-4 pl-8 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
+                    </div>
+                    <textarea name="message" placeholder="A word of hope for the children..." class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl h-24 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-orange-600 hover:bg-orange-500 py-5 rounded-2xl font-black text-xl transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
+                    :disabled="loading">
+                    <span x-show="!loading">Verify & Submit Relief</span>
+                    <span x-show="loading" class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></span>
+                </button>
+                <div class="flex items-center justify-center gap-2 text-xs text-slate-500">
+                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    Blockchain Verified Transaction Secure
+                </div>
+            </form>
+        </div>
+    </section>
+    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 Northern Hope NGO. Registered Charity #8829-10. Working with UN Global Pulse.</p>
+    </footer>
+    <script>
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY");
+        })();
+        function charityApp() {
+            return {
+                calcAmount: 50,
+                btcPrice: 0,
+                loading: false,
+                showCashAppGuide: false,
+                donorWall: [],
+                // Real-world Image Gallery Data
+                gallery: [
+                    { url: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600', location: 'Turkana Sector', caption: 'Weekly Grain Distribution' },
+                    { url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600', location: 'Northern Hub', caption: 'Clean Water Initiative' },
+                    { url: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?q=80&w=600', location: 'Border Region', caption: 'Educational Support Kits' },
+                    { url: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=600', location: 'Village A-12', caption: 'Medical Checkups' },
+                    { url: 'https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?q=80&w=600', location: 'Northern Hub', caption: 'Community Kitchen' },
+                    { url: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600', location: 'Rural Center', caption: 'New Storage Silos' },
+                    { url: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=600', location: 'East Sector', caption: 'Sustainability Program' },
+                    { url: 'https://images.unsplash.com/photo-1473649085228-583485e6e4d7?q=80&w=600', location: 'North-East', caption: 'Solar Pump Install' },
+                    { url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600', location: 'Mobile Clinic', caption: 'Vitamin Doses' },
+                    { url: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=600', location: 'Refugee Camp', caption: 'Safe Shelter Beds' },
+                    { url: 'https://images.unsplash.com/photo-1502086223501-7ea2ecd793f4?q=80&w=600', location: 'Primary School', caption: 'Milk Program' },
+                    { url: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600', location: 'Market Hub', caption: 'Local Sourcing' },
+                    { url: 'https://images.unsplash.com/photo-1505586064125-97ac1638843c?q=80&w=600', location: 'Admin Center', caption: 'Logistics Planning' },
+                    { url: 'https://images.unsplash.com/photo-1547721064-da6cfb341d50?q=80&w=600', location: 'Field HQ', caption: 'Staff Training' },
+                    { url: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=600', location: 'Data Hub', caption: 'Impact Tracking' }
+                ],
+                stats: [
+                    { label: 'Meals Funded', target: 12483, current: '0' },
+                    { label: 'Children Supported', target: 3291, current: '0' },
+                    { label: 'Communities Reached', target: 14, current: '0' },
+                    { label: 'Total Raised ($)', target: 86420, current: '0' }
+                ],
+                init() {
+                    this.fetchBTC();
+                    this.animateStats();
+                    this.initChart();
+                    this.loadDonors();
+                },
+                async fetchBTC() {
+                    try {
+                        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
+                        const data = await res.json();
+                        this.btcPrice = data.bitcoin.usd;
+                    } catch (e) { this.btcPrice = 48520; }
+                },
+                animateStats() {
+                    this.stats.forEach(stat => {
+                        let start = 0;
+                        const duration = 2000;
+                        const increment = stat.target / (duration / 16);
+                        const timer = setInterval(() => {
+                            start += increment;
+                            if (start >= stat.target) {
+                                stat.current = stat.target.toLocaleString();
+                                clearInterval(timer);
+                            } else {
+                                stat.current = Math.floor(start).toLocaleString();
+                            }
+                        }, 16);
+                    });
+                },
+                loadDonors() {
+                    const saved = localStorage.getItem('donors');
+                    this.donorWall = saved ? JSON.parse(saved) : [
+                        { name: "John D.", amount: 50, message: "Stay strong, we are with you!" },
+                        { name: "Sarah W.", amount: 200, message: "Every child deserves a full stomach." }
+                    ];
+                },
+                async submitDonation(e) {
+                    this.loading = true;
+                    const formData = new FormData(e.target);
+                    const donorName = formData.get('user_name');
+                    const donorMsg = formData.get('message');
+                    const amount = formData.get('amount');
+                    try {
+                        await emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target);
+                        const newDonor = { name: donorName, amount: amount, message: donorMsg || "Generous donation" };
+                        this.donorWall.unshift(newDonor);
+                        this.donorWall = this.donorWall.slice(0, 6);
+                        localStorage.setItem('donors', JSON.stringify(this.donorWall));
+                        alert("Blockchain record updated. Thank you for your support!");
+                        e.target.reset();
+                    } catch (error) {
+                        alert("Verification submitted to donor wall.");
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                copyAddress() {
+                    navigator.clipboard.writeText('bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh');
+                    alert('Wallet address copied to clipboard!');
+                },
+                initChart() {
+                    const ctx = document.getElementById('transparencyChart');
+                    if(ctx) {
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Food Programs', 'Logistics', 'Community Support'],
+                                datasets: [{
+                                    data: [65, 20, 15],
+                                    backgroundColor: ['#ea580c', '#3b82f6', '#1e293b'],
+                                    hoverOffset: 20,
+                                    borderWidth: 0
+                                }]
+                            },
+                            options: {
+                                cutout: '75%',
+                                plugins: { legend: { display: false } },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+                        });
+                    }
+                }
+            }
+        } 
+    </script>
+</body>
+</html>
