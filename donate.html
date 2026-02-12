@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { background: #020617; color: #f8fafc; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700;800&display=swap');
+        
+        body { background: #020617; color: #f8fafc; overflow-x: hidden; font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
         .nexus-card {
             background: rgba(15, 23, 42, 0.4);
@@ -19,9 +21,26 @@
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Interactive Input Styling */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 3px; }
         input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radius: 50%; background: #f97316; cursor: pointer; -webkit-appearance: none; margin-top: -7px; box-shadow: 0 0 15px rgba(249, 115, 22, 0.5); }
+
+        /* Widget Container Styling */
+        .widget-container {
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.1);
+        }
+
+        .switch-toggle {
+            position: relative;
+            display: inline-block;
+            width: 240px;
+            height: 40px;
+        }
     </style>
 </head>
 <body x-data="donationSystem()" x-init="generateQR()">
@@ -43,17 +62,32 @@
 
     <main class="max-w-6xl mx-auto px-6 py-8 relative z-10">
         
-        <header class="text-center mb-12 md:mb-20">
+        <header class="text-center mb-12 md:mb-16">
             <h1 class="text-4xl md:text-7xl font-black italic uppercase tracking-tighter mb-4">
                 Quantum <span class="text-orange-600">Relief</span>
             </h1>
-            <p class="text-slate-400 max-w-xl mx-auto text-sm md:text-base">
+            <p class="text-slate-400 max-w-xl mx-auto text-sm md:text-base mb-8">
                 Your Bitcoin donation bypasses banking delays to provide instant physical resources to children in the Northern Sectors.
             </p>
+
+            <div class="flex flex-col items-center gap-4">
+                <div class="glass p-1 rounded-full flex items-center">
+                    <button @click="gatewayMode = 'manual'" 
+                            :class="gatewayMode === 'manual' ? 'bg-orange-600 text-white' : 'text-slate-500'"
+                            class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all">
+                        Manual Terminal
+                    </button>
+                    <button @click="gatewayMode = 'widget'" 
+                            :class="gatewayMode === 'widget' ? 'bg-orange-600 text-white' : 'text-slate-500'"
+                            class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all">
+                        Instant Gateway
+                    </button>
+                </div>
+                <p class="text-[9px] text-orange-500/60 uppercase font-bold tracking-widest">Toggle Interface Protocol</p>
+            </div>
         </header>
 
         <div class="grid lg:grid-cols-12 gap-8 items-start">
-            <a href="transparency.html" class="hover:text-orange-500 transition">Transparency Report</a>
             
             <div class="lg:col-span-5 space-y-6">
                 <div class="nexus-card p-8 rounded-[3rem] text-center relative overflow-hidden">
@@ -73,7 +107,7 @@
                     </div>
 
                     <h4 class="text-2xl font-bold italic uppercase mb-2" x-text="getImpactLevel().title"></h4>
-                    <p class="text-sm text-slate-400 px-4" x-text="getImpactLevel().desc"></p>
+                    <p class="text-sm text-slate-400 px-4 mb-4" x-text="getImpactLevel().desc"></p>
 
                     <div class="mt-8 pt-8 border-t border-white/5 flex justify-around">
                         <div>
@@ -85,11 +119,14 @@
                             <p class="font-bold text-orange-500" x-text="amount * 5 + 'L'"></p>
                         </div>
                     </div>
+                    
+                    <a href="transparency.html" class="inline-block mt-8 text-[10px] font-bold text-slate-500 uppercase hover:text-orange-500 transition border-b border-transparent hover:border-orange-500">View Transparency Ledger →</a>
                 </div>
             </div>
 
-            <div class="lg:col-span-7 space-y-6">
-                <div class="glass p-8 rounded-[3rem] border-white/10">
+            <div class="lg:col-span-7">
+                
+                <div x-show="gatewayMode === 'manual'" x-transition class="glass p-8 rounded-[3rem] border-white/10">
                     <div class="mb-10">
                         <div class="flex justify-between items-end mb-4">
                             <label class="mono text-[10px] text-slate-500 uppercase tracking-widest">Select Gift Volume (USD)</label>
@@ -120,9 +157,9 @@
                         <div class="flex flex-col items-center space-y-4 p-6 bg-black/40 rounded-3xl border border-white/5">
                             <div id="qrcode" class="p-2 bg-white rounded-xl"></div>
                             <div class="text-center w-full">
-                                <p class="text-[9px] text-slate-500 uppercase mb-2">BTC ADDRESS</p>
+                                <p class="text-[9px] text-slate-500 uppercase mb-2">NETWORK ADDRESS</p>
                                 <div class="flex items-center gap-2 bg-slate-900 px-3 py-2 rounded-lg border border-white/10">
-                                    <code class="text-[9px] text-orange-400 break-all" id="btc-addr">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+                                    <code class="text-[9px] text-orange-400 break-all" id="btc-addr" x-text="address"></code>
                                     <button @click="copy()" class="text-slate-500 hover:text-white transition">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
                                     </button>
@@ -132,7 +169,17 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-4 justify-center opacity-30">
+                <div x-show="gatewayMode === 'widget'" x-transition class="flex justify-center">
+                    <div class="widget-container bg-slate-900/50 p-2">
+                        <iframe src="https://nowpayments.io/embeds/donation-widget?api_key=744154f1-665a-4e0a-81f3-8eae4b4fed1d" 
+                                width="346" height="623" frameborder="0" scrolling="no" 
+                                style="overflow-y: hidden; border-radius: 1.5rem;">
+                            Can't load widget
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 justify-center opacity-30 mt-10">
                     <span class="text-[9px] font-bold uppercase tracking-widest border border-white/20 px-3 py-1 rounded">256-Bit SSL</span>
                     <span class="text-[9px] font-bold uppercase tracking-widest border border-white/20 px-3 py-1 rounded">On-Chain Verified</span>
                     <span class="text-[9px] font-bold uppercase tracking-widest border border-white/20 px-3 py-1 rounded">Zero Processing Fees</span>
@@ -142,11 +189,16 @@
         </div>
     </main>
 
+    <footer class="py-12 text-center text-slate-600 text-[10px] uppercase tracking-[0.4em]">
+        Northern Hope Strategic Division &copy; 2026-2030
+    </footer>
+
     <script>
         function donationSystem() {
             return {
                 amount: 100,
                 method: 'cashapp',
+                gatewayMode: 'manual', // New toggle state
                 address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
                 methods: [
                     { id: 'cashapp', name: 'CashApp' },
@@ -156,7 +208,7 @@
                 instructions: {
                     cashapp: [
                         "Tap the <strong>Bitcoin</strong> tab in CashApp.",
-                        "Purchase <span class='text-orange-500'>$" + 100 + "</span> worth of BTC.",
+                        "Purchase BTC worth your desired amount.",
                         "Tap the <strong>Send</strong> arrow icon.",
                         "Paste our wallet address or scan the QR code."
                     ],
@@ -179,6 +231,7 @@
                     return { title: 'Sector Hero', desc: 'Full community support and educational infrastructure.' };
                 },
                 generateQR() {
+                    document.getElementById("qrcode").innerHTML = ""; // Clear existing
                     new QRCode(document.getElementById("qrcode"), {
                         text: "bitcoin:" + this.address,
                         width: 120,
