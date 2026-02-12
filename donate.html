@@ -45,13 +45,25 @@
             50% { transform: translateX(-10px); }
         }
 
+        /* Ticker Animation */
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker {
+            display: flex;
+            width: fit-content;
+            animation: ticker 30s linear infinite;
+        }
+        .ticker-wrap:hover .animate-ticker { animation-play-state: paused; }
+
         @media (max-width: 640px) {
             .nexus-card { border-radius: 2rem; padding: 1.5rem; }
             iframe { transform: scale(0.9); transform-origin: top center; }
         }
     </style>
 </head>
-<body x-data="donationSystem()" x-init="generateQR()">
+<body x-data="donationSystem()" x-init="generateQR(); initTicker();">
 
     <div class="fixed inset-0 pointer-events-none opacity-20" 
          style="background-image: radial-gradient(#f97316 0.5px, transparent 0.5px); background-size: 30px 30px;"></div>
@@ -209,6 +221,28 @@
         </div>
     </main>
 
+    <div class="relative z-50 mt-12 mb-4">
+        <div class="bg-orange-600/5 border-y border-white/5 py-3 overflow-hidden ticker-wrap">
+            <div class="animate-ticker flex whitespace-nowrap gap-12 items-center">
+                <template x-for="i in 2">
+                    <div class="flex gap-12">
+                        <template x-for="donor in tickerData">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_#f97316]"></span>
+                                <span class="text-[10px] font-black uppercase text-slate-300 tracking-tighter" x-text="donor.name"></span>
+                                <span class="text-[10px] font-mono text-orange-500" x-text="donor.amount"></span>
+                                <span class="text-[8px] text-slate-500 uppercase tracking-widest" x-text="donor.time"></span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <p class="text-[8px] font-bold text-orange-500/40 uppercase tracking-[0.5em]">Global Transaction Stream</p>
+        </div>
+    </div>
+
     <footer class="py-8 md:py-12 text-center text-slate-600 text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em]">
         Northern Hope Strategic Division &copy; 2026-2030
     </footer>
@@ -220,6 +254,14 @@
                 method: 'cashapp',
                 gatewayMode: 'manual', 
                 address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+                tickerData: [
+                    { name: 'Ghost_Protocol', amount: '0.0042 BTC', time: '2m ago' },
+                    { name: 'Sector_7_Ally', amount: '0.0150 BTC', time: '5m ago' },
+                    { name: 'Nexus_User', amount: '0.0021 BTC', time: '12m ago' },
+                    { name: 'Void_Walker', amount: '0.0088 BTC', time: '18m ago' },
+                    { name: 'Anon_Strategic', amount: '0.0310 BTC', time: '24m ago' },
+                    { name: 'Cyber_Shield', amount: '0.0055 BTC', time: '31m ago' }
+                ],
                 methods: [
                     { id: 'cashapp', name: 'CashApp' },
                     { id: 'paypal', name: 'PayPal' },
@@ -263,6 +305,19 @@
                         });
                     }
                 },
+                initTicker() {
+                    // Logic to simulate live data updates every 30 seconds
+                    setInterval(() => {
+                        const amounts = ['0.0012', '0.0050', '0.0120', '0.0009', '0.0210'];
+                        const names = ['Silent_Guard', 'Echo_Unit', 'Relief_Agent', 'Northern_Star'];
+                        this.tickerData.unshift({
+                            name: names[Math.floor(Math.random() * names.length)],
+                            amount: amounts[Math.floor(Math.random() * amounts.length)] + ' BTC',
+                            time: 'Just now'
+                        });
+                        if(this.tickerData.length > 10) this.tickerData.pop();
+                    }, 30000);
+                },
                 copy() {
                     navigator.clipboard.writeText(this.address);
                     alert("Quantum Address Copied to Clipboard!");
@@ -272,4 +327,3 @@
     </script>
 </body>
 </html>
-
