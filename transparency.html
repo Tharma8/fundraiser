@@ -1,0 +1,299 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Ops | Northern Hope Strategic Command</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { --accent: #f97316; --bg: #020617; }
+        body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-glow { box-shadow: 0 0 20px rgba(249, 115, 22, 0.15); }
+        .status-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        .custom-gradient { background: linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(59,130,246,0.1) 100%); }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid #fff; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body x-data="opsPortal()" class="overflow-x-hidden selection:bg-orange-500/30">
+
+    <template x-if="!authenticated">
+        <div class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950 px-6">
+            <div class="max-w-md w-full glass p-10 rounded-[2.5rem] text-center border-orange-500/20 animate__animated animate__fadeIn">
+                <div class="w-20 h-20 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-orange-500/30">
+                    <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 20a10.003 10.003 0 006.203-2.138l.054.09a10.003 10.003 0 00-2.753-9.57m-3.44 2.04L12 11m0 0V7m0 0L8 8m4-1l4 1m-4 10.75V20"></path></svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-2 uppercase tracking-tighter text-white">Field Access Required</h2>
+                <p class="text-slate-400 text-sm mb-8 font-mono">ENCRYPTION: AES-256-GCM | SECTOR: NORTH</p>
+                <button @click="authenticate()" class="w-full py-4 bg-orange-600 hover:bg-orange-500 rounded-2xl font-bold transition-all transform active:scale-95 neon-glow">Initialize Handshake</button>
+            </div>
+        </div>
+    </template>
+
+    <div x-show="authenticated" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" class="min-h-screen pb-20">
+        
+        <nav class="fixed left-0 top-0 bottom-0 w-20 glass border-r border-white/5 flex flex-col items-center py-8 gap-10 z-50 hidden lg:flex">
+            <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center font-black">N</div>
+            <div class="flex flex-col gap-8 flex-1 justify-center">
+                <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'text-orange-500' : 'text-slate-500'" class="transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></button>
+                <button @click="activeTab = 'logistics'" :class="activeTab === 'logistics' ? 'text-orange-500' : 'text-slate-500'" class="transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></button>
+                <button @click="activeTab = 'ledger'" :class="activeTab === 'ledger' ? 'text-orange-500' : 'text-slate-500'" class="transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></button>
+            </div>
+            <a href="index.html" class="text-slate-500 hover:text-white transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></a>
+        </nav>
+
+        <header class="lg:ml-20 px-8 py-6 flex justify-between items-center border-b border-white/5 bg-slate-950/50 sticky top-0 z-40 backdrop-blur-md">
+            <div>
+                <h1 class="text-xl font-bold text-white tracking-tight" x-text="tabTitles[activeTab]"></h1>
+                <p class="text-[10px] text-slate-500 uppercase tracking-[0.2em]" x-text="'System: ' + systemMode"></p>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex flex-col text-right">
+                    <span class="text-xs font-bold text-green-500 uppercase">Live Connection</span>
+                    <span class="text-[10px] text-slate-500 font-mono">STATION_ID: NH-2026-X</span>
+                </div>
+                <div class="w-10 h-10 rounded-full border-2 border-orange-500/20 p-1">
+                    <div class="w-full h-full bg-slate-800 rounded-full status-pulse"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="lg:ml-20 p-8 max-w-7xl mx-auto space-y-8">
+            
+            <div x-show="activeTab === 'dashboard'" class="animate__animated animate__fadeIn">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <template x-for="stat in fieldStats">
+                        <div class="glass p-6 rounded-3xl border border-white/5 hover:border-orange-500/20 transition-all group">
+                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1" x-text="stat.label"></p>
+                            <div class="flex justify-between items-end">
+                                <h3 class="text-3xl font-black text-white" x-text="stat.value"></h3>
+                                <span class="text-[10px] font-bold text-green-500 pb-1" x-text="stat.trend"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 glass rounded-[2rem] p-8 border border-white/5">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-lg font-bold italic">Distribution Intensity (48h)</h3>
+                            <div class="flex gap-2">
+                                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                            </div>
+                        </div>
+                        <canvas id="opsChart" height="280"></canvas>
+                    </div>
+
+                    <div class="glass rounded-[2rem] p-8 border border-white/5">
+                        <h3 class="text-lg font-bold mb-6">Sector Vulnerability</h3>
+                        <div class="space-y-6">
+                            <template x-for="sector in sectors">
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-slate-400 uppercase font-bold" x-text="sector.name"></span>
+                                        <span :class="sector.risk > 70 ? 'text-red-500' : 'text-orange-500'" class="font-bold" x-text="sector.risk + '% RISK'"></span>
+                                    </div>
+                                    <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-orange-600 transition-all duration-1000" :style="'width: ' + sector.risk + '%'"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="mt-10 p-4 rounded-2xl bg-orange-600/5 border border-orange-500/20">
+                            <p class="text-[10px] text-slate-400 mb-2 uppercase">Command Directive</p>
+                            <p class="text-xs leading-relaxed text-slate-300">Priority redirection enabled for Sector-B. Logistics fleet synchronized with current demand peaks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'logistics'" class="animate__animated animate__fadeIn space-y-6">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 glass p-8 rounded-[2rem] space-y-8">
+                        <h3 class="text-2xl font-bold italic">Active Routes</h3>
+                        <div class="space-y-6">
+                            <template x-for="(route, index) in routes">
+                                <div class="relative pl-8 border-l border-slate-800 pb-8 last:pb-0">
+                                    <div class="absolute -left-[5px] top-0 w-[10px] h-[10px] rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="text-xs font-bold text-white uppercase" x-text="route.origin + ' → ' + route.dest"></p>
+                                            <p class="text-[10px] text-slate-500" x-text="route.eta"></p>
+                                        </div>
+                                        <span class="px-2 py-1 rounded bg-slate-900 text-[8px] font-black text-orange-500 border border-orange-500/20" x-text="route.status"></span>
+                                    </div>
+                                    <div class="mt-4 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-500" :style="'width: ' + route.progress + '%'"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 glass p-8 rounded-[2rem] relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
+                        <div class="absolute inset-0 opacity-10 pointer-events-none">
+                            <svg width="100%" height="100%" viewBox="0 0 800 600">
+                                <circle cx="400" cy="300" r="100" stroke="#f97316" stroke-width="0.5" fill="none" />
+                                <circle cx="400" cy="300" r="200" stroke="#f97316" stroke-width="0.5" fill="none" />
+                                <line x1="0" y1="300" x2="800" y2="300" stroke="#f97316" stroke-width="0.2" />
+                                <line x1="400" y1="0" x2="400" y2="600" stroke="#f97316" stroke-width="0.2" />
+                            </svg>
+                        </div>
+                        <div class="z-10 text-center">
+                            <div class="w-32 h-32 bg-orange-600/10 rounded-full flex items-center justify-center mb-6 mx-auto border border-orange-500/30">
+                                <svg class="w-16 h-16 text-orange-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                            </div>
+                            <h4 class="text-3xl font-black italic mb-2 tracking-tight uppercase">Live Fleet Telemetry</h4>
+                            <p class="text-slate-400 text-sm max-w-sm mx-auto mb-8 font-mono tracking-widest">ENCRYPTED_UPLINK_SUCCESS_2.4ghz</p>
+                            <div class="flex gap-4 justify-center">
+                                <div class="px-6 py-2 glass rounded-full text-[10px] font-bold text-orange-500 border border-orange-500/30 uppercase">Scan Active Nodes</div>
+                                <div class="px-6 py-2 glass rounded-full text-[10px] font-bold text-white uppercase">Recalibrate Routes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'ledger'" class="animate__animated animate__fadeIn space-y-8">
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                        <div>
+                            <h2 class="text-3xl font-bold italic mb-1">Impact Ledger</h2>
+                            <p class="text-xs text-slate-500 uppercase font-mono tracking-widest">Immutable Transaction History</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <input type="text" placeholder="Search Hash ID..." class="bg-slate-900 border border-white/10 px-6 py-3 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 text-sm w-full md:w-64 transition-all">
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto hide-scrollbar">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-white/5 text-[10px] uppercase text-slate-500 tracking-widest">
+                                    <th class="py-4 px-4 font-bold">Transaction_ID</th>
+                                    <th class="py-4 px-4 font-bold">Contributor</th>
+                                    <th class="py-4 px-4 font-bold">Asset_Value</th>
+                                    <th class="py-4 px-4 font-bold">Target_Allocation</th>
+                                    <th class="py-4 px-4 font-bold text-right">Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm font-mono">
+                                <template x-for="item in ledger">
+                                    <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+                                        <td class="py-6 px-4 text-orange-500/80" x-text="item.id"></td>
+                                        <td class="py-6 px-4 text-white font-bold" x-text="item.name"></td>
+                                        <td class="py-6 px-4" x-text="'$' + item.amount"></td>
+                                        <td class="py-6 px-4 text-slate-400" x-text="item.tag"></td>
+                                        <td class="py-6 px-4 text-right">
+                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-500 text-[10px] font-black rounded-full border border-green-500/20 uppercase tracking-tighter">
+                                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                                Hash_Verified
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div x-show="showAlert" x-transition.opacity class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+            <div class="glass max-w-lg w-full p-10 rounded-[2.5rem] border-red-500/30 text-center animate__animated animate__zoomIn">
+                <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-red-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-black uppercase text-red-500 mb-2">Resource Critical Alert</h3>
+                <p class="text-slate-400 text-sm mb-8 leading-relaxed italic">Sector-D grain supply depleted by 15% below threshold. Automatic route diversion suggested for upcoming shipments.</p>
+                <button @click="showAlert = false" class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-2xl font-bold transition-all text-sm uppercase tracking-widest">Acknowledge Directive</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function opsPortal() {
+            return {
+                authenticated: false,
+                activeTab: 'dashboard',
+                systemMode: 'Strategic Command v2.4',
+                showAlert: false,
+                tabTitles: {
+                    dashboard: 'Strategic Overview',
+                    logistics: 'Supply Chain Operations',
+                    ledger: 'Transparency Ledger'
+                },
+                fieldStats: [
+                    { label: 'Active Personnel', value: '142', trend: '+12% FIELD' },
+                    { label: 'Grain Capacity', value: '82%', trend: '-4% DEMAND' },
+                    { label: 'Medical Kits', value: '1.2k', trend: 'OPTIMAL' },
+                    { label: 'Total Reach', value: '24k', trend: 'EXPANDING' }
+                ],
+                sectors: [
+                    { name: 'Northern Border', risk: 85 },
+                    { name: 'Turkana Hub', risk: 32 },
+                    { name: 'Sector-A Refugee Center', risk: 68 },
+                    { name: 'East Supply Route', risk: 15 }
+                ],
+                routes: [
+                    { origin: 'Nairobi HQ', dest: 'Turkana Center', eta: 'T-Minus 4h 12m', status: 'In Transit', progress: 65 },
+                    { origin: 'Global Port', dest: 'Northern Hub', eta: 'T-Minus 2d 10h', status: 'Ocean Freight', progress: 20 },
+                    { origin: 'Local Supply B', dest: 'Sector-A', eta: 'Delivered', status: 'Complete', progress: 100 }
+                ],
+                ledger: [
+                    { id: 'TXN_488219x', name: 'Global Impact Fund', amount: '12,400', tag: 'Direct Relief' },
+                    { id: 'TXN_110298z', name: 'Crypto Philanthropy', amount: '8,200', tag: 'Logistics' },
+                    { id: 'TXN_556122p', name: 'Anonymous Donor', amount: '1,500', tag: 'Water Kits' },
+                    { id: 'TXN_992110m', name: 'Sarah Wilson', amount: '450', tag: 'School Food' },
+                    { id: 'TXN_332115k', name: 'BlockAid Org', amount: '22,000', tag: 'Medical Units' }
+                ],
+                authenticate() {
+                    // Simulated loading/auth sequence
+                    setTimeout(() => {
+                        this.authenticated = true;
+                        this.initChart();
+                        // Trigger a random alert after 3 seconds
+                        setTimeout(() => this.showAlert = true, 3000);
+                    }, 800);
+                },
+                initChart() {
+                    this.$nextTick(() => {
+                        const ctx = document.getElementById('opsChart');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00', '04:00', '08:00'],
+                                datasets: [{
+                                    label: 'Distribution Activity',
+                                    data: [45, 32, 60, 85, 75, 90, 110, 140, 130],
+                                    borderColor: '#f97316',
+                                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                                    fill: true,
+                                    tension: 0.4,
+                                    borderWidth: 3,
+                                    pointRadius: 0
+                                }]
+                            },
+                            options: {
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                    y: { display: false },
+                                    x: { grid: { display: false }, ticks: { color: '#475569', font: { size: 9 } } }
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
