@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE REGISTRY | BUREAU OF FRAUD INTELLIGENCE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gov-navy: #001f3f;
+            --gov-gold: #c5a059;
+            --status-pending: #f59e0b;
+            --status-active: #3b82f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .heading { font-family: 'Lexend', sans-serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--gov-navy);
+            box-shadow: 0 0 0 4px rgba(0, 31, 63, 0.05);
+            transform: translateY(-1px);
+        }
+        .case-card {
+            border-left: 4px solid var(--gov-gold);
+            background: white;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .case-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background: var(--gov-navy);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:active { transform: scale(0.98); }
+        
+        /* Loading pulse for tracking */
+        .scanning {
+            animation: scan 1.5s infinite;
+            background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.2), transparent);
+            background-size: 200% 100%;
+        }
+        @keyframes scan {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="w-full bg-[#001f3f] text-white py-2.5 px-6 lg:px-20 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase border-b border-white/10">
+        <div class="flex items-center gap-4">
+            <span class="h-2 w-2 bg-emerald-500 rounded-full animate-ping"></span>
+            <span>Secure Node: 2026-BFI-INTAKE</span>
+        </div>
+        <div class="hidden md:block opacity-60">Status: Encrypted Section 7-G</div>
+    </div>
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="fraud.jpeg" class="h-10 w-10 object-contain group-hover:rotate-12 transition-transform">
+                <div>
+                    <span class="block heading font-black text-xl text-[#001f3f] leading-none uppercase tracking-tighter">BFI Portal</span>
+                    <span class="text-[9px] font-bold text-amber-600 uppercase tracking-widest">Case Registration Unit</span>
+                </div>
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="track.html" class="hidden sm:block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 hover:text-[#001f3f]">Track Case</a>
+                <a href="testimonials.html" class="bg-slate-100 text-[#001f3f] px-4 py-2 rounded text-[10px] font-bold uppercase tracking-widest hover:bg-amber-500 hover:text-white transition">Archives</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <div class="lg:col-span-8">
+                <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-50 border-b border-slate-200 p-6">
+                        <h1 class="heading text-2xl font-black text-[#001f3f] uppercase">Intelligence Intake Form</h1>
+                        <p class="text-slate-500 text-xs mt-1 font-medium">Step 1: Identity & Incident Verification</p>
+                    </div>
+
+                    <form id="caseForm" class="p-8 space-y-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="md:col-span-1">
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Full Name</label>
+                                <input type="text" id="userName" required class="input-field" placeholder="Full Legal Name">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Email Address</label>
+                                <input type="email" id="userEmail" required class="input-field" placeholder="Contact Email">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Phone</label>
+                                <input type="tel" id="userPhone" required class="input-field" placeholder="+1 (000) 000-0000">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Recovery Division</label>
+                                <select id="fraudType" class="input-field font-bold text-[#001f3f]">
+                                    <option>Crypto Asset Tracing</option>
+                                    <option>Wire Transfer Reversal</option>
+                                    <option>Romance Scam Recovery</option>
+                                    <option>Institutional Investment Fraud</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Amount Lost (USD)</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-3.5 text-slate-400 font-bold">$</span>
+                                    <input type="number" id="amount" required class="input-field pl-8" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 tracking-widest">Incident Narrative</label>
+                            <textarea id="description" rows="5" required class="input-field" placeholder="Detail the timeline of events, wallet addresses, or suspect names..."></textarea>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <input type="checkbox" required class="h-4 w-4 rounded border-blue-300">
+                            <label class="text-[10px] font-bold text-blue-900 uppercase">I certify that all provided information is accurate under penalty of perjury.</label>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-full text-white font-black py-5 rounded-lg uppercase tracking-[0.3em] text-xs shadow-lg shadow-blue-900/20">
+                            Generate Tracking ID & Submit Case
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-[#001f3f] text-white p-6 rounded-xl shadow-lg border border-white/10">
+                    <h2 class="heading font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span> Quick Track
+                    </h2>
+                    <div class="flex gap-2">
+                        <input type="text" id="trackInput" placeholder="Enter REF-ID" class="w-full bg-white/10 border border-white/20 rounded px-3 py-2 text-xs mono focus:outline-none focus:border-amber-500">
+                        <button onclick="quickTrack()" class="bg-amber-600 px-4 py-2 rounded text-[10px] font-bold uppercase hover:bg-amber-500 transition">Search</button>
+                    </div>
+                    <div id="trackResult" class="mt-4 hidden p-3 bg-white/5 rounded border border-white/5">
+                        </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <h2 class="heading font-black text-[#001f3f] mb-6 uppercase text-xs tracking-[0.2em] border-b pb-4">Secure Local Registry</h2>
+                    <div id="localCaseList" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        <div id="emptyMsg" class="text-center py-10">
+                            <div class="text-slate-300 mb-2">Empty Registry</div>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Waiting for input...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const caseForm = document.getElementById('caseForm');
+        const localCaseList = document.getElementById('localCaseList');
+        const emptyMsg = document.getElementById('emptyMsg');
+
+        // Load cases from Local Storage
+        function loadCases() {
+            const cases = JSON.parse(localStorage.getItem('bfi_cases')) || [];
+            
+            if (cases.length > 0) {
+                emptyMsg.style.display = 'none';
+                localCaseList.innerHTML = '';
+                cases.reverse().forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'case-card p-5 rounded-lg shadow-sm border border-slate-100 relative group';
+                    div.onclick = () => { document.getElementById('trackInput').value = c.id; quickTrack(); };
+                    
+                    div.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="mono text-blue-700 font-black text-[10px] tracking-tighter bg-blue-50 px-2 py-0.5 rounded">${c.id}</span>
+                            <span class="text-[8px] font-black uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-700">${c.status}</span>
+                        </div>
+                        <div class="font-black text-slate-800 text-xs uppercase mb-1">${c.name}</div>
+                        <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">${c.type}</div>
+                        <div class="flex justify-between items-end mt-4">
+                            <div class="text-[10px] font-black text-emerald-700">$${parseFloat(c.amount).toLocaleString()}</div>
+                            <div class="text-[8px] text-slate-300 font-mono">${c.date}</div>
+                        </div>
+                    `;
+                    localCaseList.appendChild(div);
+                });
+            }
+        }
+
+        // Form Submission logic
+        caseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Generate a professional tracking ID
+            const randomID = 'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+            const newCase = {
+                id: randomID,
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                type: document.getElementById('fraudType').value,
+                amount: document.getElementById('amount').value,
+                desc: document.getElementById('description').value,
+                status: 'Under Review',
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            };
+
+            const existingCases = JSON.parse(localStorage.getItem('bfi_cases')) || [];
+            existingCases.push(newCase);
+            localStorage.setItem('bfi_cases', JSON.stringify(existingCases));
+
+            // Success Animation/Feedback
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = "Submitting to Central Database...";
+            btn.classList.add('scanning');
+
+            setTimeout(() => {
+                alert(`SUCCESS: Case ${randomID} has been registered.\n\nPlease save your Tracking ID to monitor recovery progress.`);
+                window.location.href = `track.html?id=${randomID}`; // Link to the tracking file
+                caseForm.reset();
+                btn.innerHTML = "Generate Tracking ID & Submit Case";
+                btn.classList.remove('scanning');
+                loadCases();
+            }, 1500);
+        });
+
+        // Quick Tracking Search Function
+        function quickTrack() {
+            const id = document.getElementById('trackInput').value.trim().toUpperCase();
+            const resultBox = document.getElementById('trackResult');
+            const cases = JSON.parse(localStorage.getItem('bfi_cases')) || [];
+            
+            const found = cases.find(c => c.id === id);
+            
+            resultBox.classList.remove('hidden');
+            if(found) {
+                resultBox.innerHTML = `
+                    <div class="text-[10px] font-bold text-amber-500 mb-1">RECORD FOUND</div>
+                    <div class="text-xs font-black uppercase text-white mb-2">${found.name}</div>
+                    <div class="flex justify-between items-center text-[9px] font-bold">
+                        <span class="text-slate-400 uppercase">Current Status:</span>
+                        <span class="text-emerald-400 animate-pulse">${found.status}</span>
+                    </div>
+                    <a href="track.html?id=${found.id}" class="block text-center mt-3 text-[8px] font-black uppercase text-blue-300 hover:text-white underline">View Full Forensic Report</a>
+                `;
+            } else {
+                resultBox.innerHTML = `<div class="text-[10px] font-bold text-red-400">NO CASE MATCHES THAT ID</div>`;
+            }
+        }
+
+        window.onload = loadCases;
+    </script>
+</body>
+</html>

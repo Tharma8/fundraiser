@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE REGISTRY | BUREAU OF FRAUD INTELLIGENCE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --gov-navy: #001f3f;
+            --gov-gold: #c5a059;
+            --registry-gray: #f1f5f9;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1e293b; }
+        .heading { font-family: 'Lexend', sans-serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        .registry-table tr {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .registry-table tr:hover {
+            background-color: var(--registry-gray);
+        }
+
+        .status-badge {
+            padding: 2px 8px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 2px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .search-input {
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--gov-navy);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 31, 63, 0.05);
+        }
+
+        /* Responsive Table Scroll */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="w-full bg-[#001f3f] text-white py-3 px-6 lg:px-20 flex justify-between items-center text-[10px] font-bold tracking-widest uppercase">
+        <div class="flex items-center gap-4">
+            <img src="f9b231ad-65c5-4923-9c64-3d6278c5c832.jpeg" class="h-6 w-6 brightness-200">
+            <span>Official Case Repository</span>
+        </div>
+        <div class="hidden md:block">Access Level: Public Disclosure</div>
+    </div>
+
+    <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <span class="heading font-black text-xl text-[#001f3f] tracking-tighter uppercase">Fraud Recovery</span>
+            </a>
+            <div class="flex gap-6 text-[11px] font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-blue-700">Home</a>
+                <a href="protocol.html" class="hover:text-blue-700">Protocols</a>
+                <a href="register.html" class="text-blue-900 underline">File New Case</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="bg-slate-50 py-16 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <h1 class="heading text-4xl font-black text-[#001f3f] mb-4 uppercase">Resolved Case Registry</h1>
+            <p class="text-slate-500 max-w-2xl text-sm leading-relaxed">
+                A comprehensive archive of successfully liquidated assets and neutralized fraudulent entities from 2004 to present. This database is updated every 24 hours.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-8 bg-white border-b border-slate-100 sticky top-20 z-40">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-4 justify-between">
+            <input type="text" id="caseSearch" placeholder="Search by ID, Type, or Year..." class="search-input px-6 py-3 w-full md:w-96 text-sm">
+            <div class="flex gap-2">
+                <select id="yearFilter" class="search-input px-4 py-3 text-xs font-bold uppercase cursor-pointer">
+                    <option value="">All Years</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="Archive">Older Archives</option>
+                </select>
+                <button class="bg-[#001f3f] text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest">Export PDF</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="table-container bg-white border border-slate-200">
+                <table class="w-full text-left registry-table">
+                    <thead class="bg-slate-50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-200">
+                        <tr>
+                            <th class="px-6 py-4">Case ID</th>
+                            <th class="px-6 py-4">Filing Year</th>
+                            <th class="px-6 py-4">Division</th>
+                            <th class="px-6 py-4">Recovered Amount</th>
+                            <th class="px-6 py-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="caseTableBody" class="text-sm font-medium text-slate-700">
+                        </tbody>
+                </table>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Showing <span id="caseCount">50</span> of 1,402 records</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#001f3f] text-white py-12 px-6 mt-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <img src="f9b231ad-65c5-4923-9c64-3d6278c5c832.jpeg" class="h-16 w-16 mx-auto mb-6 grayscale brightness-200">
+            <p class="text-[10px] font-bold uppercase tracking-[0.4em] opacity-50">Bureau of Fraud Intelligence &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data generation for 50 cases
+        const divisions = ["Crypto Liquidation", "Offshore Tracing", "Broker Forensics", "Identity Retrieval", "Data Breach Ops"];
+        const years = [2025, 2024, 2023, 2022, 2021, 2018, 2015, 2010, 2004];
+        
+        const caseData = [];
+        for (let i = 1; i <= 50; i++) {
+            const randomYear = years[Math.floor(Math.random() * years.length)];
+            const randomDiv = divisions[Math.floor(Math.random() * divisions.length)];
+            const amount = (Math.random() * (500000 - 10000) + 10000).toLocaleString(undefined, {minimumFractionDigits: 2});
+            
+            caseData.push({
+                id: `BFU-${randomYear}-${1000 + i}`,
+                year: randomYear,
+                division: randomDiv,
+                amount: `$${amount}`,
+                status: "Resolved"
+            });
+        }
+
+        const tableBody = document.getElementById('caseTableBody');
+
+        function renderCases(data) {
+            tableBody.innerHTML = '';
+            data.forEach(item => {
+                const row = `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="px-6 py-5 mono text-blue-900 font-bold">${item.id}</td>
+                        <td class="px-6 py-5">${item.year}</td>
+                        <td class="px-6 py-5 font-semibold text-slate-900">${item.division}</td>
+                        <td class="px-6 py-5 font-bold text-green-700">${item.amount}</td>
+                        <td class="px-6 py-5"><span class="status-badge">Resolved</span></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Initial Render
+        renderCases(caseData);
+
+        // Simple Search Logic
+        document.getElementById('caseSearch').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const filtered = caseData.filter(c => 
+                c.id.toLowerCase().includes(term) || 
+                c.division.toLowerCase().includes(term) ||
+                c.year.toString().includes(term)
+            );
+            renderCases(filtered);
+            document.getElementById('caseCount').innerText = filtered.length;
+        });
+
+        // Year Filter Logic
+        document.getElementById('yearFilter').addEventListener('change', function(e) {
+            const val = e.target.value;
+            if(!val) return renderCases(caseData);
+            
+            const filtered = caseData.filter(c => {
+                if(val === "Archive") return c.year < 2023;
+                return c.year == val;
+            });
+            renderCases(filtered);
+            document.getElementById('caseCount').innerText = filtered.length;
+        });
+
+        AOS.init();
+    </script>
+</body>
+</html>

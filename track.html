@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE TRACKING | BUREAU OF FRAUD INTELLIGENCE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gov-navy: #001f3f;
+            --gov-gold: #c5a059;
+            --cyber-blue: #0ea5e9;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #000b18; color: #e2e8f0; }
+        .heading { font-family: 'Lexend', sans-serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--gov-gold);
+        }
+
+        /* Progress Bar Animation */
+        .progress-glow {
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Scanning Animation */
+        .scan-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--cyber-blue), transparent);
+            position: absolute;
+            width: 100%;
+            top: 0;
+            animation: scanning 3s linear infinite;
+        }
+
+        @keyframes scanning {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Forensic Log Styling */
+        .log-entry::before {
+            content: ">";
+            color: var(--gov-gold);
+            margin-right: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+
+    <div class="w-full bg-[#001f3f] border-b border-blue-900/50 py-3 px-6 lg:px-20 flex justify-between items-center text-[10px] font-black tracking-[0.3em] uppercase">
+        <div class="flex items-center gap-4 text-blue-400">
+            <span class="h-2 w-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_#3b82f6]"></span>
+            <span>Live Forensic Link Established</span>
+        </div>
+        <div class="hidden md:block text-amber-500/80">Classification: Top Secret // Asset Recovery</div>
+    </div>
+
+    <nav class="border-b border-white/5 bg-black/40">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="fraud.jpeg" class="h-10 w-10 object-contain brightness-110">
+                <div>
+                    <span class="block heading font-black text-xl text-white leading-none uppercase tracking-tighter">BFI Intelligence</span>
+                    <span class="text-[9px] font-bold text-amber-600 uppercase tracking-widest">Forensic Tracking Portal</span>
+                </div>
+            </a>
+            <a href="register.html" class="text-[10px] font-black uppercase tracking-widest border border-white/20 px-4 py-2 rounded hover:bg-white hover:text-black transition">New Filing</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div id="errorDisplay" class="hidden text-center py-20">
+            <h2 class="heading text-4xl font-black text-red-500 mb-4">INVALID ACCESS CODE</h2>
+            <p class="text-slate-400 mb-8">The Case Reference ID provided does not exist in our secure registry.</p>
+            <a href="register.html" class="bg-blue-600 text-white px-8 py-3 rounded font-bold uppercase tracking-widest text-xs">Return to Intake</a>
+        </div>
+
+        <div id="dashboard" class="hidden space-y-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 glass-panel p-8 rounded-xl relative overflow-hidden">
+                    <div class="scan-line"></div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <div class="mono text-amber-500 text-xs font-bold mb-2 tracking-widest">IDENTIFIED CASE: <span id="displayID" class="text-white">REF-XXXXX</span></div>
+                            <h1 id="displayName" class="heading text-4xl font-black text-white uppercase tracking-tight">INVESTIGATION ACTIVE</h1>
+                            <div class="flex gap-4 mt-4">
+                                <span class="text-[10px] bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full font-bold uppercase" id="displayType">Loading...</span>
+                                <span class="text-[10px] bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full font-bold uppercase" id="displayStatus">Under Review</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Loss Value Verified</div>
+                            <div id="displayAmount" class="heading text-3xl font-black text-emerald-400">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12">
+                        <div class="flex justify-between text-[10px] font-black uppercase mb-3 tracking-widest text-slate-400">
+                            <span>Investigation Phase: Recovery Queue</span>
+                            <span id="progressText">35% Complete</span>
+                        </div>
+                        <div class="w-full bg-white/5 h-4 rounded-full overflow-hidden border border-white/10">
+                            <div id="progressBar" class="h-full bg-gradient-to-right from-blue-600 to-cyber-blue progress-glow" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-xl">
+                    <h3 class="heading font-bold text-xs uppercase text-amber-500 mb-6 tracking-[0.2em] border-b border-white/10 pb-4">Registry Info</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Date Registered</div>
+                            <div id="displayDate" class="mono text-xs text-white">JAN-01-2026</div>
+                        </div>
+                        <div>
+                            <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Assigned Unit</div>
+                            <div class="mono text-xs text-white">BFI Recovery Alpha-6</div>
+                        </div>
+                        <div>
+                            <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Protocol</div>
+                            <div class="mono text-xs text-white">Full Asset Liquidation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="heading font-bold text-xs uppercase text-blue-400 mb-6 tracking-[0.2em]">Live Investigation Log</h3>
+                    <div id="forensicLogs" class="mono text-[11px] space-y-3 h-64 overflow-y-auto pr-4 text-slate-300">
+                        <div class="log-entry">Initializing secure connection to offshore server...</div>
+                        <div class="log-entry">Bypassing encrypted proxy layers...</div>
+                        <div class="log-entry">Matching Case ID against global fraud database...</div>
+                        </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-xl border-l-4 border-l-amber-600">
+                    <h3 class="heading font-bold text-xs uppercase text-white mb-6 tracking-[0.2em]">Required Actions</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 p-4 bg-white/5 rounded border border-white/10">
+                            <div class="h-8 w-8 rounded bg-amber-500/20 flex items-center justify-center text-amber-500">1</div>
+                            <p class="text-xs text-slate-300 leading-relaxed">Our agents are currently tracing the transaction hash. No further action required at this time.</p>
+                        </div>
+                        <div class="flex gap-4 p-4 bg-white/5 rounded border border-white/10 opacity-50">
+                            <div class="h-8 w-8 rounded bg-slate-500/20 flex items-center justify-center text-slate-400">2</div>
+                            <p class="text-xs text-slate-400 leading-relaxed">Verification of identity documents (Pending Investigation Phase 3).</p>
+                        </div>
+                        <button onclick="window.print()" class="w-full mt-4 py-3 border border-white/20 rounded text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Download Forensic Report PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get Case ID from URL (e.g., track.html?id=REF-12345)
+        const params = new URLSearchParams(window.location.search);
+        const caseID = params.get('id');
+
+        const dashboard = document.getElementById('dashboard');
+        const errorDisplay = document.getElementById('errorDisplay');
+
+        function initTracking() {
+            if (!caseID) {
+                errorDisplay.classList.remove('hidden');
+                return;
+            }
+
+            const cases = JSON.parse(localStorage.getItem('bfi_cases')) || [];
+            const found = cases.find(c => c.id === caseID);
+
+            if (found) {
+                dashboard.classList.remove('hidden');
+                
+                // Populate Data
+                document.getElementById('displayID').innerText = found.id;
+                document.getElementById('displayName').innerText = found.name;
+                document.getElementById('displayType').innerText = found.type;
+                document.getElementById('displayStatus').innerText = found.status;
+                document.getElementById('displayDate').innerText = found.date;
+                document.getElementById('displayAmount').innerText = '$' + parseFloat(found.amount).toLocaleString();
+
+                // Start Simulated Log
+                startForensicLogs();
+                
+                // Randomize Progress slightly for realism
+                const progress = Math.floor(Math.random() * (45 - 20) + 20);
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').innerText = progress + '% Complete';
+
+            } else {
+                errorDisplay.classList.remove('hidden');
+            }
+        }
+
+        function startForensicLogs() {
+            const logsContainer = document.getElementById('forensicLogs');
+            const messages = [
+                "Scanning global blockchain nodes for transaction matching...",
+                "Cross-referencing suspect IP addresses with Interpol watchlists...",
+                "Intelligence report uploaded to Central Asset Recovery database.",
+                "Analyzing offshore bank routing numbers...",
+                "Forensic link verified. Monitoring suspect wallet activity...",
+                "Waiting for clearance from Jurisdictional Authorities."
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < messages.length) {
+                    const entry = document.createElement('div');
+                    entry.className = 'log-entry animate-pulse';
+                    entry.innerText = messages[i];
+                    logsContainer.appendChild(entry);
+                    logsContainer.scrollTop = logsContainer.scrollHeight;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 3000);
+        }
+
+        window.onload = initTracking;
+    </script>
+</body>
+</html>

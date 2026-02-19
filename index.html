@@ -1,436 +1,429 @@
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northern Hope | End Child Hunger</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>FRAUD UNIT | Global Asset Recovery & Forensic Intelligence</title>
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
-        .parallax-bg {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2000');
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
+        :root {
+            --primary-blue: #003366;
+            --deep-blue: #001f3f;
+            --gov-gold: #c5a059;
+            --text-dark: #0f172a;
         }
-        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-        .gradient-text { background: linear-gradient(90deg, #f97316, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .donor-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .donor-card:hover { transform: translateY(-5px) scale(1.02); }
-        
-        .step-card { background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(255,255,255,0.05); transition: border 0.3s ease; }
-        .step-card:hover { border-color: rgba(249, 115, 22, 0.4); }
-
-        /* Floating Animation for Hero */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff; 
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
-        .floating { animation: float 3s ease-in-out infinite; }
+
+        .heading { font-family: 'Lexend', sans-serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        .gov-banner {
+            background: linear-gradient(90deg, #001f3f 0%, #003366 100%);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .image-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gov-gold);
+            box-shadow: 0 20px 40px rgba(0, 31, 63, 0.1);
+        }
+
+        .btn-gov {
+            background: var(--primary-blue);
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-gov:hover {
+            background: var(--deep-blue);
+            border-color: var(--gov-gold);
+            transform: translateY(-1px);
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Official Seal Watermark */
+        .seal-bg {
+            position: absolute;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+        }
+
+        #mobileMenu {
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            transform: translateX(100%);
+        }
+        #mobileMenu.active {
+            transform: translateX(0);
+        }
+
+        .official-underline {
+            height: 4px;
+            width: 60px;
+            background: var(--gov-gold);
+            margin-top: 1rem;
+        }
+
+        /* News Ticker */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: #f1f5f9;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 60s linear infinite;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans selection:bg-orange-500/30" x-data="charityApp()">
-    
-    <nav class="fixed top-0 w-full z-[80] px-4 md:px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="glass px-4 py-2 rounded-full flex items-center gap-2">
-                <div class="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
-                <span class="font-bold tracking-tighter text-sm uppercase">Northern Hope</span>
-            </div>
-            
-            <div class="hidden md:flex glass px-6 py-2 rounded-full gap-6 text-sm font-medium">
-                <a href="mission.html" class="hover:text-orange-500 transition">Our Mission</a>
-                <a href="impact.html" class="hover:text-orange-500 transition">Impact</a>
-                <a href="transparency.html" class="hover:text-orange-500 transition">Transparency</a>
-                <a href="donate.html" class="hover:text-orange-500 transition">Donate</a>
-                <a href="about.html" class="hover:text-orange-500 transition">About</a>
-            </div>
+<body class="antialiased">
 
-            <div class="flex md:hidden gap-2">
-                <a href="donate.html" class="glass px-4 py-2 rounded-full text-xs font-bold text-orange-500">Donate</a>
-                <button @click="mobileMenu = !mobileMenu" class="glass px-4 py-2 rounded-full text-xs font-bold">
-                    <span x-text="mobileMenu ? '✕' : 'MENU'"></span>
-                </button>
+    <div class="w-full gov-banner text-white py-2 px-6 lg:px-20 flex justify-between items-center text-[11px] font-bold tracking-wider">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 border-r border-blue-800 pr-4">
+                <span class="status-dot animate-pulse"></span>
+                <span class="uppercase">Network Status: Secure</span>
+            </div>
+            <div class="hidden sm:block uppercase opacity-80">
+                Official Government Intelligence Portal
             </div>
         </div>
+        <div class="mono text-blue-300">
+            SYSTEM_TIME: <span id="clock">00:00:00</span>
+        </div>
+    </div>
 
-        <div x-show="mobileMenu" x-transition class="md:hidden mt-2 glass rounded-2xl p-4 flex flex-col gap-4 text-center text-sm pointer-events-auto">
-            <a @click="mobileMenu = false" href="mission.html" class="py-2 border-b border-white/5">Our Mission</a>
-            <a @click="mobileMenu = false" href="impact.html" class="py-2 border-b border-white/5">Impact</a>
-            <a @click="mobileMenu = false" href="transparency.html" class="py-2 border-b border-white/5">Transparency</a>
-            <a @click="mobileMenu = false" href="donate.html" class="py-2 text-orange-500 font-bold">Donate Now</a>
-             <a @click="mobileMenu = false" href="about.html" class="py-2 border-b border-white/5">About</a>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            ALERT: NEW CRYPTO-DRAINER SIGNATURE DETECTED IN SECTOR 7 // UNIT 04 DEPLOYED TO RECOVER $12M ASSETS IN ASIA-PACIFIC JURISDICTION // ALL FILINGS ARE NOW SUBJECT TO 256-BIT ENCRYPTION // 
+        </div>
+    </div>
+
+    <nav class="sticky top-0 w-full z-[100] glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4">
+                <img src="fraud.jpeg" alt="Bureau Seal" class="h-16 w-16 object-contain">
+                <div>
+                    <span class="block heading font-black text-2xl leading-none text-[#001f3f] tracking-tighter uppercase">Fraud Recovery</span>
+                    <span class="text-[10px] uppercase tracking-[.3em] font-bold text-[#c5a059]">Asset Recovery Bureau</span>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center space-x-8 text-[11px] font-extrabold text-slate-700 uppercase tracking-widest">
+                <a href="services.html" class="hover:text-blue-900 transition">Operational Divisions</a>
+                <a href="protocol.html" class="hover:text-blue-900 transition">Jurisdiction</a>
+                <a href="cases.html" class="hover:text-blue-900 transition">Case Records</a>
+                <a href="reviews.html" class="hover:text-blue-900 transition">Case Reviews</a>
+                 <a href="register.html" class="hover:text-blue-900 transition">File New Case</a>
+                
+                <a href="contact.html" class="btn-gov px-6 py-3 rounded shadow-sm">File Report</a>
+            </div>
+
+            <button class="lg:hidden text-blue-900" id="mobileMenuBtn">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </div>
     </nav>
 
-    <div x-show="showCashAppGuide" x-transition.opacity class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
-        <div @click.away="showCashAppGuide = false" class="glass max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] p-8 md:p-12 relative border-orange-500/30">
-            <button @click="showCashAppGuide = false" class="absolute top-6 right-6 text-slate-400 hover:text-white">✕</button>
-            <h3 class="text-3xl font-bold mb-6 text-orange-500">How to Donate via Cash App</h3>
-            <div class="space-y-6 text-slate-300">
-                <div class="flex gap-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">1</div>
-                    <p><span class="text-white font-bold">Open Cash App:</span> Tap the <span class="text-green-500">Bitcoin</span> tab.</p>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">2</div>
-                    <p><span class="text-white font-bold">Buy BTC:</span> Enter amount and confirm purchase.</p>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold">3</div>
-                    <p><span class="text-white font-bold">Send:</span> Tap airplane icon and enter wallet below.</p>
-                </div>
-                <div class="bg-black/40 p-4 rounded-xl border border-white/10 break-all font-mono text-xs text-orange-400">bc1qjnz3flqaxhpmv3hf5nkpe2gq8zy70l0v0w70ks</div>
-                <button @click="copyAddress(); showCashAppGuide = false" class="w-full py-4 bg-orange-600 rounded-xl font-bold hover:bg-orange-500 transition">Copy & Close</button>
-            </div>
+    <div id="mobileMenu" class="fixed inset-0 bg-white z-[200] flex flex-col p-10 lg:hidden">
+        <div class="flex justify-between items-center mb-16">
+            <span class="heading font-black text-xl text-blue-900 tracking-widest">MENU</span>
+            <button id="closeMenu" class="text-slate-500 text-4xl">&times;</button>
+        </div>
+        <div class="flex flex-col space-y-8 text-2xl font-bold heading text-blue-950 uppercase">
+            <a href="services.html" class="hover:text-gold transition">Divisions</a>
+            <a href="protocol.html" class="hover:text-gold transition">Protocols</a>
+            <a href="cases.html" class="hover:text-gold transition">Intelligence</a>
+            <a href="reviews.html" class="hover:text-gold transition">Case Reviews</a>
+            <a href="contact.html" class="text-blue-700">Submit Evidence</a>
         </div>
     </div>
 
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-slate-950 z-10"></div>
-            <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-sad-child-looking-out-the-window-34440-large.mp4" type="video/mp4">
-            </video>
-        </div>
+    <section class="relative bg-slate-50 pt-24 pb-32 overflow-hidden border-b border-slate-200">
+        <img src="f9b231ad-65c5-4923-9c64-3d6278c5c832.jpeg" class="seal-bg" alt="Watermark">
         
-        <div class="relative z-20 text-center px-4 max-w-4xl">
-            <span class="inline-block px-4 py-1 mb-4 border border-orange-500/50 rounded-full text-orange-500 text-sm font-bold tracking-widest uppercase animate__animated animate__fadeIn">Emergency Appeal 2026</span>
-            <h1 class="text-4xl md:text-8xl font-black mb-6 leading-tight animate__animated animate__fadeInDown">
-                Tonight, Children <span class="text-orange-500">Sleep Hungry.</span>
-            </h1>
-            <p class="text-lg md:text-2xl mb-10 text-slate-300 max-w-2xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
-                Northern Hope is a direct-action initiative providing nutritional relief to vulnerable children through blockchain-powered transparency.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate__animated animate__fadeInUp animate__delay-2s">
-                <a href="donate.html" class="w-full sm:w-auto px-10 py-4 bg-orange-600 hover:bg-orange-500 rounded-full font-bold transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] text-center">🔶 Donate Now</a>
-                <button @click="showCashAppGuide = true" class="w-full sm:w-auto px-10 py-4 border border-white/20 hover:bg-white/10 rounded-full font-bold transition-all">How to use CashApp</button>
-            </div>
-        </div>
-
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 floating hidden md:block">
-            <div class="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-2">
-                <div class="w-1 h-2 bg-orange-500 rounded-full animate-bounce"></div>
-            </div>
-        </div>
-    </header>
-
-    <div class="bg-slate-900 border-y border-white/5 py-6">
-        <div class="container mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <span class="font-bold text-xl italic uppercase">UN Global Pulse</span>
-            <span class="font-bold text-xl italic uppercase">World Relief</span>
-            <span class="font-bold text-xl italic uppercase">Bitcoin Foundation</span>
-            <span class="font-bold text-xl italic uppercase">Food for All</span>
-        </div>
-    </div>
-
-    <section id="mission" class="py-24 bg-slate-950">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
-                <div>
-                    <h2 class="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4">What we do</h2>
-                    <p class="text-4xl md:text-5xl font-bold leading-tight">We bridge the gap between global kindness and local hunger.</p>
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div data-aos="fade-right">
+                <div class="inline-block px-3 py-1 border border-blue-200 bg-blue-50 text-blue-800 text-[10px] font-bold tracking-widest uppercase mb-6">
+                    Verified Federal Response Unit
                 </div>
-                <div class="text-slate-400 text-lg">
-                    <p>Northern Hope operates at the intersection of humanitarian aid and financial technology. We provide a decentralized way for you to save lives without the friction of traditional charities.</p>
+                <h1 class="heading text-5xl md:text-7xl font-extrabold text-[#001f3f] mb-8 leading-tight tracking-tight">
+                    Securing the <br><span class="text-blue-800">Global Financial</span> <br>Frontier.
+                </h1>
+                <p class="text-lg text-slate-600 mb-10 leading-relaxed max-w-lg">
+                    The Bureau of Fraud Intelligence & Asset Recovery provides high-level forensic intervention for international financial crimes, crypto-asset liquidation, and corporate identity fraud.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="contact.html" class="btn-gov px-10 py-5 text-sm font-bold uppercase tracking-widest shadow-lg text-center">Initiate Case File</a>
+                    <a href="cases.html" class="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-10 py-5 text-sm font-bold uppercase tracking-widest text-center transition">Public Records</a>
                 </div>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="step-card p-8 rounded-3xl">
-                    <div class="w-12 h-12 bg-orange-500/20 text-orange-500 rounded-xl flex items-center justify-center mb-6 font-bold text-xl border border-orange-500/20">01</div>
-                    <h3 class="text-xl font-bold mb-4">Secure Donation</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Send Bitcoin or use CashApp. By using blockchain, we bypass slow bank transfers and ensure more money reaches those in need.</p>
-                </div>
-                <div class="step-card p-8 rounded-3xl">
-                    <div class="w-12 h-12 bg-blue-500/20 text-blue-500 rounded-xl flex items-center justify-center mb-6 font-bold text-xl border border-blue-500/20">02</div>
-                    <h3 class="text-xl font-bold mb-4">Direct Deployment</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Funds are converted to local supplies. Our field teams deliver meals, clean water, and medical kits directly to children.</p>
-                </div>
-                <div class="step-card p-8 rounded-3xl">
-                    <div class="w-12 h-12 bg-green-500/20 text-green-500 rounded-xl flex items-center justify-center mb-6 font-bold text-xl border border-green-500/20">03</div>
-                    <h3 class="text-xl font-bold mb-4">Public Verification</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Every transaction is logged. Use our Portal to see your impact appear live, creating a transparent ledger of hope.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="parallax-bg py-40 flex items-center justify-center text-center">
-        <div class="container mx-auto px-6 max-w-3xl">
-            <h2 class="text-4xl md:text-6xl font-black mb-8 italic">"A small bite for you is a giant <span class="text-orange-500">leap for them."</span></h2>
-            <p class="text-xl text-slate-100">Across the Northern regions, over 2.4 million children face extreme nutritional deficiencies. We aren't just sending food; we are sending a message that they aren't forgotten.</p>
-        </div>
-    </section>
-
-    <section class="py-24 bg-slate-950">
-        <div class="container mx-auto px-6 mb-12 flex justify-between items-end">
-            <div>
-                <h2 class="text-3xl font-bold">Live from the <span class="text-orange-500">Field</span></h2>
-                <p class="text-slate-400">Updates from our distribution centers within the last 48 hours.</p>
-            </div>
-            <div class="hidden md:flex gap-2">
-                <div class="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
-                <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Live Updates</span>
-            </div>
-        </div>
-        <div class="flex gap-6 overflow-x-auto px-6 hide-scrollbar pb-10">
-            <template x-for="img in gallery">
-                <div class="flex-shrink-0 w-72 h-96 rounded-2xl overflow-hidden relative group border border-white/5">
-                    <img :src="img.url" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" :alt="img.caption">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
-                        <p class="text-xs text-orange-500 font-bold mb-1" x-text="img.location"></p>
-                        <p class="text-sm font-medium" x-text="img.caption"></p>
+            <div class="hidden lg:block relative" data-aos="fade-left">
+                <div class="relative z-10 bg-white p-4 shadow-2xl border border-slate-200 rotate-2">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80" alt="Bureau Operations" class="grayscale hover:grayscale-0 transition duration-700">
+                    <div class="mt-4 flex justify-between items-center text-[10px] font-bold uppercase text-slate-400">
+                        <span>Terminal: DC-COORD-04</span>
+                        <span>Authorized Personnel Only</span>
                     </div>
                 </div>
-            </template>
+                <div class="absolute -bottom-6 -left-6 w-full h-full border-2 border-blue-900/10 -z-10 -rotate-2"></div>
+            </div>
         </div>
     </section>
 
-    <section id="impact" class="py-24 bg-slate-900 border-y border-white/5">
-        <div class="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-            <template x-for="stat in stats">
-                <div class="group transition-transform hover:-translate-y-2">
-                    <div class="text-4xl md:text-6xl font-black text-orange-500 mb-2 drop-shadow-2xl" x-text="stat.current">0</div>
-                    <div class="text-slate-500 uppercase tracking-tighter font-bold text-[10px] md:text-sm" x-text="stat.label"></div>
+    <div class="bg-[#001f3f] py-8 border-y border-blue-800">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-around gap-8 text-white">
+            <div class="text-center">
+                <div class="mono text-3xl font-bold text-[#c5a059]" id="threatCount">1,248</div>
+                <div class="text-[10px] uppercase tracking-widest opacity-60 mt-1">Intercepted Threats</div>
+            </div>
+            <div class="text-center">
+                <div class="mono text-3xl font-bold text-[#c5a059]">$4.2B+</div>
+                <div class="text-[10px] uppercase tracking-widest opacity-60 mt-1">Recovered Assets</div>
+            </div>
+            <div class="text-center">
+                <div class="mono text-3xl font-bold text-[#c5a059]">142</div>
+                <div class="text-[10px] uppercase tracking-widest opacity-60 mt-1">Active Jurisdictions</div>
+            </div>
+        </div>
+    </div>
+
+    <section id="cases" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <h2 class="heading text-4xl font-extrabold text-[#001f3f] uppercase tracking-tight">Intelligence Divisions</h2>
+                <div class="official-underline"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="image-card p-8 bg-white" data-aos="fade-up">
+                    <div class="w-12 h-12 bg-slate-100 flex items-center justify-center mb-6 border border-slate-200">
+                        <span class="mono font-bold text-blue-900">01</span>
+                    </div>
+                    <h3 class="heading text-xl font-bold text-slate-900 mb-3 uppercase tracking-tight">Crypto Liquidation</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Cross-border blockchain forensic analysis and real-time wallet seizure protocols for decentralized assets.</p>
+                    <a href="contact.html" class="text-[11px] font-black uppercase text-blue-800 tracking-widest hover:text-blue-600 inline-flex items-center gap-2">
+                        View Directive <span>&rarr;</span>
+                    </a>
                 </div>
-            </template>
+
+                <div class="image-card p-8 bg-white" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-slate-100 flex items-center justify-center mb-6 border border-slate-200">
+                        <span class="mono font-bold text-blue-900">02</span>
+                    </div>
+                    <h3 class="heading text-xl font-bold text-slate-900 mb-3 uppercase tracking-tight">Offshore Tracing</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Mapping complex shell company structures and international banking conduits across tax-neutral zones.</p>
+                    <a href="contact.html" class="text-[11px] font-black uppercase text-blue-800 tracking-widest hover:text-blue-600 inline-flex items-center gap-2">
+                        View Directive <span>&rarr;</span>
+                    </a>
+                </div>
+
+                <div class="image-card p-8 bg-white" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-slate-100 flex items-center justify-center mb-6 border border-slate-200">
+                        <span class="mono font-bold text-blue-900">03</span>
+                    </div>
+                    <h3 class="heading text-xl font-bold text-slate-900 mb-3 uppercase tracking-tight">Broker Forensics</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Auditing unregulated trading platforms and dark-pool binary options syndicates using AI-driven detection.</p>
+                    <a href="contact.html" class="text-[11px] font-black uppercase text-blue-800 tracking-widest hover:text-blue-600 inline-flex items-center gap-2">
+                        View Directive <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="transparency" class="py-24 bg-slate-950">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
+    <section id="contact" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto bg-white border border-slate-200 shadow-xl overflow-hidden">
+            <div class="bg-[#001f3f] p-8 text-white flex items-center gap-6">
+                <img src="f9b231ad-65c5-4923-9c64-3d6278c5c832.jpeg" class="h-16 w-16 bg-white p-1">
                 <div>
-                    <h2 class="text-4xl font-bold mb-6">Where your <span class="text-blue-500">money</span> goes.</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">We believe in radical transparency. Every cent is tracked from your wallet to the child's plate.</p>
-                    
-                    <div class="flex flex-col md:flex-row items-center gap-8 bg-slate-900/50 p-8 rounded-3xl border border-white/5">
-                        <div class="w-48 h-48 relative">
-                            <canvas id="transparencyChart"></canvas>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-orange-600"></span>
-                                <span class="text-sm">65% Food Programs</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-                                <span class="text-sm">20% Logistics</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-slate-700"></span>
-                                <span class="text-sm">15% Community Support</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-xl font-bold text-orange-500 uppercase tracking-widest mb-4">Recent Heroes</h3>
-                    <div class="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto pr-2 hide-scrollbar">
-                        <template x-for="donor in donorWall">
-                            <div class="donor-card glass p-5 rounded-2xl flex justify-between items-center">
-                                <div>
-                                    <p class="font-bold text-white text-sm md:text-base" x-text="donor.name"></p>
-                                    <p class="text-xs text-slate-400 italic" x-text="'&quot;' + donor.message + '&quot;'"></p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-orange-500 font-black" x-text="'$' + donor.amount"></p>
-                                    <p class="text-[10px] text-green-500 font-mono">VERIFIED</p>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
+                    <h2 class="heading text-2xl font-bold uppercase tracking-tight">Case Submission Portal</h2>
+                    <p class="text-blue-200 text-[11px] font-bold uppercase tracking-[0.2em] opacity-80">Official Asset Reclamation Directive</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="donate" class="py-24 container mx-auto px-6">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div class="space-y-12">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Take <span class="text-blue-500">Action.</span></h2>
-                    <p class="text-slate-400 text-lg mb-4">Your contribution goes directly to the field. 100% of BTC donations bypass traditional banking fees.</p>
-                    <button @click="showCashAppGuide = true" class="text-orange-500 font-bold flex items-center gap-2 hover:underline">
-                        Need help with Cash App? View Guide →
-                    </button>
+            
+            <form id="recoveryForm" class="p-10 space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Full Legal Identity</label>
+                        <input type="text" placeholder="Surname, Given Names" required class="w-full border-b border-slate-300 py-3 outline-none focus:border-blue-900 text-sm transition">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Secure Contact Channel</label>
+                        <input type="email" placeholder="Email Address" required class="w-full border-b border-slate-300 py-3 outline-none focus:border-blue-900 text-sm transition">
+                    </div>
                 </div>
                 
-                <div class="glass p-8 rounded-3xl border border-white/10">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-sm font-bold uppercase text-slate-400">Impact Calculator</span>
-                        <span class="text-orange-500 font-mono text-2xl" x-text="'$' + calcAmount"></span>
-                    </div>
-                    <input type="range" min="5" max="1000" x-model="calcAmount" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-orange-500 mb-8">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5 text-center">
-                            <p class="text-2xl font-bold" x-text="Math.floor(calcAmount / 2)"></p>
-                            <p class="text-[10px] text-slate-500 uppercase">Meals</p>
-                        </div>
-                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5 text-center">
-                            <p class="text-2xl font-bold text-blue-400" x-text="Math.floor(calcAmount / 15)"></p>
-                            <p class="text-[10px] text-slate-500 uppercase">Water Kits</p>
-                        </div>
-                        <div class="bg-slate-900/50 p-4 rounded-2xl border border-white/5 text-center">
-                            <p class="text-2xl font-bold text-orange-400" x-text="Math.floor(calcAmount / 50)"></p>
-                            <p class="text-[10px] text-slate-500 uppercase">School Packs</p>
-                        </div>
-                    </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Bureau Division Selection</label>
+                    <select class="w-full border-b border-slate-300 py-3 outline-none focus:border-blue-900 text-sm bg-white cursor-pointer">
+                        <option>Crypto Asset Recovery (Section 4)</option>
+                        <option>Investment Fraud (Section 9)</option>
+                        <option>Identity Theft Mitigation</option>
+                        <option>Corporate Espionage</option>
+                    </select>
                 </div>
 
-                <div class="glass p-8 rounded-3xl border border-orange-500/20 bg-orange-500/5">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.556.362 9.103 1.966 2.67 8.474-1.24 14.904.364c6.415 1.604 10.342 8.114 8.734 14.54zm-6.415-4.429c.244-1.634-1.003-2.513-2.708-3.098l.554-2.223-1.353-.337-.54 2.162c-.356-.088-.721-.171-1.082-.253l.545-2.184-1.353-.337-.554 2.223c-.294-.067-.585-.133-.865-.203l.001-.005-1.866-.466-.36 1.446s1.004.23 1.004.23c.548.136.647.498.63.785l-.631 2.531c.038.01.087.024.141.046l-.142-.035-1.01 4.053c-.067.166-.237.416-.618.321 0 0-1.004-.25-1.004-.25l-.672 1.549 1.762.44c.328.082.65.167.966.246l-.56 2.247 1.352.338.555-2.224c.37.101.73.197 1.081.288l-.552 2.215 1.353.337.56-2.249c2.31.438 4.047.261 4.777-1.828.588-1.683-.029-2.653-1.248-3.285.887-.205 1.556-.79 1.735-1.996zm-3.1 4.36c-.42 1.684-3.256.774-4.175.546l.745-2.986c.92.23 3.858.683 3.43 2.44zm.422-4.387c-.381 1.53-2.734.753-3.502.562l.676-2.71c.767.191 3.212.546 2.826 2.148z"/></svg>
-                        </div>
-                        <h4 class="text-xl font-bold">Fast BTC Donation Send Btc Only</h4>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-6 items-center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" class="bg-white p-2 rounded-lg border-4 border-orange-500 w-32 h-32" alt="QR">
-                        <div class="flex-1 w-full">
-                            <label class="text-[10px] text-slate-500 uppercase font-bold mb-1 block">Network: Bitcoin</label>
-                            <input readonly value="bc1qjnz3flqaxhpmv3hf5nkpe2gq8zy70l0v0w70ks" class="w-full bg-black/40 border border-white/10 p-3 rounded text-xs mb-3 font-mono text-orange-200">
-                            <button @click="copyAddress" class="w-full py-2 bg-orange-600/20 border border-orange-500/40 text-orange-500 rounded-lg text-sm font-bold hover:bg-orange-500/10 transition">Copy Address</button>
-                        </div>
-                    </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Incident Disclosure</label>
+                    <textarea rows="4" placeholder="Detail the financial loss, transaction IDs, and suspect information..." class="w-full border border-slate-200 p-4 outline-none focus:border-blue-900 text-sm transition bg-slate-50"></textarea>
                 </div>
-            </div>
 
-            <form @submit.prevent="submitDonation" class="glass p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-2xl space-y-6 lg:sticky lg:top-24">
-                <h3 class="text-3xl font-bold italic">Verification Portal</h3>
-                <p class="text-sm text-slate-400">Enter your details after sending BTC to appear on our Hero Wall.</p>
-                
-                <div class="space-y-4">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <input name="user_name" type="text" placeholder="Display Name" class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
-                        <input name="user_email" type="email" placeholder="Email" class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
-                    </div>
-                    <div class="relative">
-                        <span class="absolute left-4 top-4 text-slate-500">$</span>
-                        <input name="amount" type="number" x-model="calcAmount" class="w-full bg-slate-900 border border-white/10 p-4 pl-8 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" required>
-                    </div>
-                    <textarea name="message" placeholder="A word of hope..." class="w-full bg-slate-900 border border-white/10 p-4 rounded-xl h-24 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                <div class="flex items-center gap-4 p-4 bg-blue-50 border border-blue-100 rounded text-[11px] text-blue-800">
+                    <input type="checkbox" required class="h-4 w-4">
+                    <label>I certify that the information provided is accurate and I authorize the Bureau to initiate forensic scanning on my behalf.</label>
                 </div>
-                <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 py-5 rounded-2xl font-black text-lg transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50" :disabled="loading">
-                    <span x-show="!loading">Verify & Submit Relief</span>
-                    <span x-show="loading" class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></span>
+
+                <button type="submit" class="w-full btn-gov py-5 font-bold uppercase tracking-[0.2em] text-sm shadow-xl">
+                    Authorize Forensic Investigation
                 </button>
-                <div class="text-center text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-                    🛡️ Blockchain Verified Secure
-                </div>
             </form>
         </div>
     </section>
-    
-    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm px-4">
-        <p>&copy; 2026 Northern Hope NGO. Registered Charity #8829-10. Working with UN Global Pulse.</p>
+
+    <footer class="bg-[#001f3f] text-white pt-20 pb-10 px-6 border-t-4 border-[#c5a059]">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-4 gap-12 mb-20">
+                <div class="col-span-2">
+                    <h4 class="heading font-black text-2xl mb-6 tracking-tighter uppercase">Fraud Recovery</h4>
+                    <p class="text-blue-200/60 max-w-sm mb-8 text-sm leading-relaxed">
+                        Operating under international asset recovery protocols. We provide the forensic bridge between digital crime and legal restitution.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="h-10 w-10 border border-blue-800 flex items-center justify-center text-[10px] hover:bg-blue-800 transition cursor-pointer font-bold">FB</div>
+                        <div class="h-10 w-10 border border-blue-800 flex items-center justify-center text-[10px] hover:bg-blue-800 transition cursor-pointer font-bold">TW</div>
+                        <div class="h-10 w-10 border border-blue-800 flex items-center justify-center text-[10px] hover:bg-blue-800 transition cursor-pointer font-bold">LI</div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6 text-[#c5a059] uppercase tracking-widest text-[11px]">Resources</h5>
+                    <ul class="space-y-3 text-blue-100/50 text-xs font-medium">
+                        <li><a href="contact.html" class="hover:text-white transition">Agent Portal</a></li>
+                        <li><a href="cases.html" class="hover:text-white transition">Case Archives</a></li>
+                        <li><a href="protocol.html" class="hover:text-white transition">Transparency Report</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6 text-[#c5a059] uppercase tracking-widest text-[11px]">Legal</h5>
+                    <ul class="space-y-3 text-blue-100/50 text-xs font-medium">
+                        <li><a href="privacy.html" class="hover:text-white transition">Privacy Disclosure</a></li>
+                        <li><a href="services.html" class="hover:text-white transition">Service Jurisdictions</a></li>
+                        <li><a href="#" class="hover:text-white transition">FOIA Requests</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-900 pt-10 flex flex-col md:flex-row justify-between items-center text-[9px] font-bold tracking-[0.4em] text-blue-400 uppercase">
+                <p>© 2012 Bureau of Fraud Intelligence. All Rights Reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <span>Security Clearance: LEVEL 4</span>
+                    <span>Global Recovery Node: 0-01</span>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <script>
-        (function() { emailjs.init("YOUR_PUBLIC_KEY"); })();
-        function charityApp() {
-            return {
-                calcAmount: 50, btcPrice: 0, loading: false, showCashAppGuide: false, mobileMenu: false, donorWall: [],
-                gallery: [
-                    { url: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600', location: 'Turkana Sector', caption: 'Weekly Grain Distribution' },
-                    { url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600', location: 'Northern Hub', caption: 'Clean Water Initiative' },
-                    { url: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?q=80&w=600', location: 'Border Region', caption: 'Educational Support Kits' },
-                    { url: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=600', location: 'Village A-12', caption: 'Medical Checkups' },
-                    { url: 'https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?q=80&w=600', location: 'Northern Hub', caption: 'Community Kitchen' },
-                    { url: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600', location: 'Rural Center', caption: 'New Storage Silos' }
-                ],
-                stats: [
-                    { label: 'Meals Funded', target: 12483, current: '0' },
-                    { label: 'Children Supported', target: 3291, current: '0' },
-                    { label: 'Communities Reached', target: 14, current: '0' },
-                    { label: 'Total Raised ($)', target: 86420, current: '0' }
-                ],
-                init() {
-                    this.fetchBTC();
-                    this.animateStats();
-                    this.initChart();
-                    this.loadDonors();
-                },
-                async fetchBTC() {
-                    try {
-                        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
-                        const data = await res.json();
-                        this.btcPrice = data.bitcoin.usd;
-                    } catch (e) { this.btcPrice = 48520; }
-                },
-                animateStats() {
-                    this.stats.forEach(stat => {
-                        let start = 0; const duration = 2000; const increment = stat.target / (duration / 16);
-                        const timer = setInterval(() => {
-                            start += increment;
-                            if (start >= stat.target) {
-                                stat.current = stat.target.toLocaleString();
-                                clearInterval(timer);
-                            } else { stat.current = Math.floor(start).toLocaleString(); }
-                        }, 16);
-                    });
-                },
-                loadDonors() {
-                    const saved = localStorage.getItem('donors');
-                    this.donorWall = saved ? JSON.parse(saved) : [
-                        { name: "John D.", amount: 50, message: "Stay strong, we are with you!" },
-                        { name: "Sarah W.", amount: 200, message: "Every child deserves a full stomach." }
-                    ];
-                },
-                async submitDonation(e) {
-                    this.loading = true;
-                    const formData = new FormData(e.target);
-                    try {
-                        await emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target);
-                        const newDonor = { name: formData.get('user_name'), amount: formData.get('amount'), message: formData.get('message') || "Generous donation" };
-                        this.donorWall.unshift(newDonor);
-                        this.donorWall = this.donorWall.slice(0, 6);
-                        localStorage.setItem('donors', JSON.stringify(this.donorWall));
-                        alert("Blockchain record updated. Thank you!");
-                        e.target.reset();
-                    } catch (error) { alert("Verification submitted to donor wall."); }
-                    finally { this.loading = false; }
-                },
-                copyAddress() {
-                    navigator.clipboard.writeText('bc1qjnz3flqaxhpmv3hf5nkpe2gq8zy70l0v0w70ks');
-                    alert('Wallet address copied!');
-                },
-                initChart() {
-                    const ctx = document.getElementById('transparencyChart');
-                    if(ctx) {
-                        new Chart(ctx, {
-                            type: 'doughnut',
-                            data: {
-                                datasets: [{
-                                    data: [65, 20, 15],
-                                    backgroundColor: ['#ea580c', '#3b82f6', '#1e293b'],
-                                    borderWidth: 0
-                                }]
-                            },
-                            options: { cutout: '75%', plugins: { legend: { display: false } }, responsive: true }
-                        });
-                    }
-                }
-            }
-        } 
+        AOS.init({ duration: 800, once: true });
+
+        // System Clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ":" + 
+                               now.getMinutes().toString().padStart(2, '0') + ":" + 
+                               now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const hideMenu = () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeBtn.addEventListener('click', hideMenu);
+
+        // Counter Logic
+        let threats = 1248;
+        setInterval(() => {
+            threats += Math.floor(Math.random() * 2);
+            document.getElementById('threatCount').innerText = threats.toLocaleString();
+        }, 5000);
+
+        // Form Logic
+        document.getElementById('recoveryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = "<span class='animate-pulse'>UPLOADING SECURE PACKETS...</span>";
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                alert("OFFICIAL NOTICE: Case Registration Successful. Reference Case-ID: BUREAU-" + Math.floor(Math.random()*1000000));
+                btn.innerHTML = originalText;
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                this.reset();
+            }, 3000);
+        });
     </script>
 </body>
-
 </html>
-
-
-

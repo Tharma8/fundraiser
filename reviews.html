@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBLIC TESTIMONIALS | BUREAU OF FRAUD INTELLIGENCE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --gov-navy: #001f3f;
+            --gov-gold: #c5a059;
+            --success-green: #065f46;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .heading { font-family: 'Lexend', sans-serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+
+        .review-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-top: 3px solid var(--gov-gold);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            border-color: var(--gov-gold);
+        }
+
+        .client-img {
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .review-card:hover .client-img {
+            filter: grayscale(0%);
+        }
+
+        .verified-stamp {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.05;
+            width: 80px;
+            pointer-events: none;
+        }
+
+        .metric-box {
+            background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+            border-bottom: 4px solid var(--gov-gold);
+        }
+
+        /* Official Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--gov-navy); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="w-full bg-[#001f3f] text-white py-2 px-6 lg:px-20 flex justify-between items-center text-[10px] font-bold tracking-widest uppercase border-b border-blue-800">
+        <div class="flex items-center gap-4">
+            <span class="status-dot h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span>Archive Access: Public Testimonial Ledger</span>
+        </div>
+        <div class="hidden md:block text-blue-300">Classification: Unclassified / Public Distribution</div>
+    </div>
+
+    <nav class="sticky top-0 w-full z-[100] bg-white/95 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="fraud.jpeg" class="h-12 w-12 object-contain">
+                <div>
+                    <span class="block heading font-black text-xl text-[#001f3f] leading-none uppercase tracking-tighter">Fraud Recovery</span>
+                    <span class="text-[9px] font-bold text-amber-600 uppercase tracking-widest">Success Archives</span>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-amber-600 transition">Portal Home</a>
+                <a href="register.html" class="hover:text-amber-600 transition">Case Registry</a>
+                <a href="register.html" class="bg-[#001f3f] text-white px-5 py-2.5 rounded hover:bg-amber-600 transition">Initiate Recovery</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-12 metric-box text-white">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center border-r border-blue-800/50 last:border-0">
+                <div class="text-3xl md:text-4xl font-black heading mb-1 text-amber-500">98.4%</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-blue-200">Resolution Rate</div>
+            </div>
+            <div class="text-center border-r border-blue-800/50 last:border-0">
+                <div class="text-3xl md:text-4xl font-black heading mb-1 text-amber-500">50,000+</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-blue-200">Victims Assisted</div>
+            </div>
+            <div class="text-center border-r border-blue-800/50 last:border-0">
+                <div class="text-3xl md:text-4xl font-black heading mb-1 text-amber-500">$4.2B</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-blue-200">Capital Seized</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl md:text-4xl font-black heading mb-1 text-amber-500">50</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-blue-200">US States Active</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="heading text-4xl font-black text-[#001f3f] uppercase tracking-tight">Verified Restitution Logs</h2>
+                    <div class="h-1 w-20 bg-amber-600 my-4"></div>
+                    <p class="text-slate-600 text-sm leading-relaxed">The following cases represent successfully closed investigations across the United States where capital was returned to citizens. All sensitive data has been redacted per privacy protocols.</p>
+                </div>
+                <div class="flex gap-2 text-[10px] font-bold uppercase bg-slate-200 p-1 rounded">
+                    <span class="px-3 py-1 bg-white shadow-sm rounded">USA Regions</span>
+                    <span class="px-3 py-1 opacity-50 cursor-not-allowed">Verified Only</span>
+                </div>
+            </div>
+
+            <div id="testimonialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#001f3f] text-white py-16 px-6 border-t-8 border-amber-600">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+            <img src="fraud.jpeg" class="h-20 w-20 mb-8 brightness-0 invert opacity-80">
+            <h3 class="heading font-bold text-xl uppercase tracking-widest mb-4">Bureau of Fraud Intelligence</h3>
+            <div class="flex flex-wrap justify-center gap-6 mb-8 text-[10px] font-bold uppercase tracking-widest text-blue-300">
+                <span>Privacy Policy</span>
+                <span>US Jurisdictions</span>
+                <span>FOIA Requests</span>
+                <span>Agent Login</span>
+            </div>
+            <p class="text-[9px] font-medium uppercase tracking-[0.5em] opacity-30">Official Recovery Node 2026-BFI-ALPHA</p>
+        </div>
+    </footer>
+
+    <script>
+        const divisions = ["Asset Recovery", "Crypto Forensics", "Investment Fraud", "Offshore Tracing"];
+        
+        // Updated to reflect only USA states
+        const regions = [
+            { name: "California", flag: "🇺🇸", loc: "West Coast" },
+            { name: "New York", flag: "🇺🇸", loc: "East Coast" },
+            { name: "Texas", flag: "🇺🇸", loc: "South" },
+            { name: "Florida", flag: "🇺🇸", loc: "South" },
+            { name: "Illinois", flag: "🇺🇸", loc: "Midwest" },
+            { name: "Washington", flag: "🇺🇸", loc: "Pacific" },
+            { name: "New Jersey", flag: "🇺🇸", loc: "East Coast" },
+            { name: "Virginia", flag: "🇺🇸", loc: "Atlantic" }
+        ];
+
+        // Updated with American names
+        const people = [
+            { name: "Michael Richardson", img: "https://i.pravatar.cc/150?u=11" },
+            { name: "Jennifer Davis", img: "https://i.pravatar.cc/150?u=12" },
+            { name: "Robert Miller", img: "https://i.pravatar.cc/150?u=13" },
+            { name: "William Thompson", img: "https://i.pravatar.cc/150?u=14" },
+            { name: "Elizabeth Garcia", img: "https://i.pravatar.cc/150?u=15" },
+            { name: "James Wilson", img: "https://i.pravatar.cc/150?u=16" },
+            { name: "Patricia Moore", img: "https://i.pravatar.cc/150?u=17" },
+            { name: "Christopher Taylor", img: "https://i.pravatar.cc/150?u=18" },
+            { name: "Linda Anderson", img: "https://i.pravatar.cc/150?u=19" },
+            { name: "David Martinez", img: "https://i.pravatar.cc/150?u=20" }
+        ];
+
+        const stories = [
+            "Full recovery of $84,200 from an unlicensed binary options platform. Tracking took 14 days.",
+            "Intercepted an unauthorized offshore transfer of $150,000. Assets returned to my US bank account.",
+            "Bureau tracked my stolen BTC through 14 mixers and successfully liquidated the attacker's wallet.",
+            "The Identity Theft division stopped a fraudulent mortgage application in my name. Highly professional.",
+            "Recovered my life savings of $230k within a month of filing the initial intelligence report."
+        ];
+
+        const grid = document.getElementById('testimonialGrid');
+
+        for (let i = 1; i <= 50; i++) {
+            const region = regions[i % regions.length];
+            const person = people[i % people.length];
+            const division = divisions[i % divisions.length];
+            const story = stories[i % stories.length];
+            const amount = (Math.random() * 200000 + 10000).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+            const year = Math.floor(Math.random() * (2026 - 2020) + 2020);
+            
+            const card = `
+                <div class="review-card relative p-8 group" data-aos="fade-up">
+                    <img src="f9b231ad-65c5-4923-9c64-3d6278c5c832.jpeg" class="verified-stamp">
+                    
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="${person.img}" class="client-img h-14 w-14 rounded-full border-2 border-slate-100 object-cover shadow-sm">
+                        <div>
+                            <h4 class="heading font-bold text-slate-900 leading-none mb-1 text-sm">${person.name}</h4>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">${region.flag} ${region.name}, USA &bull; ${region.loc}</p>
+                        </div>
+                    </div>
+
+                    <div class="mono text-[10px] font-bold text-blue-800 mb-3 block">CASE_ID: #${1000 + i}_ALPHA</div>
+                    
+                    <p class="text-xs text-slate-600 leading-relaxed mb-6 h-12 overflow-hidden italic">
+                        "${story}"
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase">
+                            <span class="text-slate-400">Recovered:</span>
+                            <span class="text-green-700 bg-green-50 px-2 py-1 rounded">${amount}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase">
+                            <span class="text-slate-400">Division:</span>
+                            <span class="text-blue-900">${division}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase border-t border-slate-100 pt-3">
+                            <span class="text-slate-400">Date Closed:</span>
+                            <span class="text-slate-900">DEC-12-${year}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += card;
+        }
+
+        AOS.init({ duration: 600, once: true });
+    </script>
+</body>
+</html>

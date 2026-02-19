@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Directorate | FRAUD UNIT Forensic Intelligence Bureau</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;700;900&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --gov-blue: #002147;
+            --gov-blue-light: #003366;
+            --gov-gold: #c5a059;
+            --safety-red: #b91c1c;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1a1a1a; overflow-x: hidden; }
+        .heading { font-family: 'Lexend', sans-serif; }
+        .serif-sub { font-family: 'Libre+Baskerville', serif; }
+
+        /* Official Government Top Bar */
+        .gov-banner {
+            background: #f0f0f0;
+            border-bottom: 1px solid #d1d1d1;
+            font-size: 11px;
+            font-weight: 600;
+            color: #444;
+            padding: 6px 0;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 3px solid var(--gov-blue);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card {
+            transition: all 0.4s ease-in-out;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border-radius: 0; /* Government sites often use sharper corners for authority */
+        }
+
+        .service-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 33, 71, 0.1);
+            border-left: 5px solid var(--gov-blue);
+        }
+
+        .gov-seal-bg {
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+
+        #mobileMenu {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(100%);
+        }
+        #mobileMenu.active { transform: translateX(0); }
+
+        .official-stamp {
+            border: 2px solid var(--safety-red);
+            color: var(--safety-red);
+            padding: 4px 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+            transform: rotate(-12deg);
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.8;
+        }
+
+        @keyframes data-stream {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+        .monitor-screen {
+            background: #000;
+            border: 4px solid #333;
+            box-shadow: inset 0 0 20px #00ff0033;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="gov-banner">
+        <div class="max-w-7xl mx-auto px-6 flex items-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" class="w-4 h-3" alt="Gov Flag">
+            <span>An official website of the FRAUD UNIT Forensic Intelligence Bureau</span>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 w-full z-[100] glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4">
+                <img src="fraud.jpeg" alt="Bureau Seal" class="h-14 w-14 rounded-full border-2 border-slate-200 shadow-sm">
+                <div>
+                    <span class="block heading font-black text-xl leading-none text-slate-900 tracking-tight uppercase">FRAUD RECOVERY</span>
+                    <span class="text-[10px] uppercase tracking-[.2em] font-bold text-slate-500">Forensic Intelligence Bureau</span>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center space-x-8 text-[12px] font-bold text-slate-800 uppercase tracking-widest">
+                <a href="index.html" class="hover:text-blue-900 border-b-2 border-transparent hover:border-blue-900 pb-1 transition-all">Home</a>
+                <a href="#specialized" class="hover:text-blue-900 border-b-2 border-transparent hover:border-blue-900 pb-1 transition-all">Directorates</a>
+                <a href="#methodology" class="hover:text-blue-900 border-b-2 border-transparent hover:border-blue-900 pb-1 transition-all">Protocols</a>
+                <a href="index.html#contact" class="bg-[#002147] text-white px-6 py-3 hover:bg-slate-800 transition shadow-md">Open Investigation</a>
+            </div>
+
+            <button class="lg:hidden text-slate-900" id="mobileMenuBtn">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobileMenu" class="fixed inset-0 bg-[#002147] z-[150] p-10 lg:hidden text-white">
+        <div class="flex justify-between items-center mb-16">
+            <span class="heading font-black text-xl tracking-widest">BUREAU MENU</span>
+            <button id="closeMenu" class="text-4xl">&times;</button>
+        </div>
+        <div class="flex flex-col space-y-10">
+            <a href="index.html" class="text-3xl font-black heading">01. HOME</a>
+            <a href="#specialized" class="text-3xl font-black heading">02. DIRECTORATES</a>
+            <a href="#methodology" class="text-3xl font-black heading">03. PROTOCOLS</a>
+            <a href="index.html#contact" class="text-3xl font-black heading text-blue-400 italic">SUBMIT EVIDENCE</a>
+        </div>
+        <div class="absolute bottom-10 left-10">
+            <p class="text-[10px] uppercase tracking-[.4em] opacity-50">Secure Alpha-Terminal</p>
+        </div>
+    </div>
+
+    <header class="relative bg-slate-50 border-b border-slate-200 py-24 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div data-aos="fade-right">
+                <div class="official-stamp mb-6">Classified Access</div>
+                <h1 class="heading text-4xl md:text-6xl font-black text-slate-900 mb-6 uppercase leading-[0.9] tracking-tighter">
+                    Cyber Asset <br><span class="text-blue-900">Recovery Directorate</span>
+                </h1>
+                <p class="text-slate-600 text-lg md:text-xl font-medium mb-10 leading-relaxed border-l-4 border-blue-900 pl-6">
+                    Mandated to identify, analyze, and neutralize global fraud syndicates. We utilize high-level forensic protocols to ensure the restoration of digital equity.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#specialized" class="bg-[#002147] text-white px-10 py-4 font-bold uppercase tracking-widest text-sm shadow-xl hover:bg-slate-800 transition">View Capabilities</a>
+                    <div class="flex items-center gap-3 px-6 py-4 border border-slate-300 font-bold text-slate-500 uppercase text-[10px] tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Bureau Systems Online
+                    </div>
+                </div>
+            </div>
+            <div class="relative" data-aos="fade-left">
+                <div class="monitor-screen rounded-lg aspect-video p-6 flex flex-col justify-between">
+                    <div class="text-[#00ff00] font-mono text-xs space-y-1 opacity-70">
+                        <p>> INITIALIZING BUREAU_LINK...</p>
+                        <p>> ENCRYPTING NODE 124.9.0.1</p>
+                        <p>> ACCESSING GLOBAL LEDGER...</p>
+                        <p>> SEARCHING FOR STOLEN_ASSETS_HASH...</p>
+                    </div>
+                    <div id="live-data" class="text-[#00ff00] font-mono text-lg text-center font-bold">
+                        [ SYSTEM READY ]
+                    </div>
+                    <div class="h-1 bg-[#00ff0022] w-full overflow-hidden">
+                        <div class="h-full bg-[#00ff00] w-1/3 animate-[move_2s_infinite_linear]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-12 bg-white border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center border-r border-slate-100 last:border-0">
+                    <span class="block text-3xl font-black text-blue-900 heading tracking-tighter">98.4%</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Case Clearance Rate</span>
+                </div>
+                <div class="text-center border-r border-slate-100 last:border-0">
+                    <span class="block text-3xl font-black text-blue-900 heading tracking-tighter">142</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partner Jurisdictions</span>
+                </div>
+                <div class="text-center border-r border-slate-100 last:border-0">
+                    <span class="block text-3xl font-black text-blue-900 heading tracking-tighter">24/7</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ops Monitoring</span>
+                </div>
+                <div class="text-center border-r border-slate-100 last:border-0">
+                    <span class="block text-3xl font-black text-blue-900 heading tracking-tighter">$4.1B</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recovered in 2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specialized" class="py-24 px-6 gov-seal-bg">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="heading text-3xl md:text-5xl font-black text-slate-900 mb-4 uppercase tracking-tighter">Specialized Operations Directorates</h2>
+                <div class="w-24 h-1 bg-blue-900 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-slate-200">
+                
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Block">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Alpha</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Blockchain Intelligence</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Comprehensive tracing of digital assets across decentralized ledgers. We specialize in deanonymization of high-privacy wallets and transaction path reconstruction.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Node Path Analysis</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Exchange Interception</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Intel">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Beta</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Signal Intelligence</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Utilizing OSINT and proprietary HUMINT networks to establish the physical identity of cyber actors. We operate within a global network of law enforcement liaison offices.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Identity Attribution</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Geo-Location Tracking</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Legal">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Gamma</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Asset Seizure Legal</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Facilitating the legal freezing of assets through international court orders. Our legal team serves injunctions directly to exchanges and global banking institutions.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Mareva Injunctions</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Cross-Border Litigation</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Server">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Delta</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Infrastructural Audit</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Penetrative auditing of fraudulent server architectures. We identify leaks in host security to reclaim victim data and original transaction metadata.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Data Breach Recovery</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Log Pattern Discovery</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Inv">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Epsilon</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Investment Forensic</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Specialized investigation into high-yield investment programs (HYIP) and fraudulent trading platforms. We deconstruct the financial flow from inception to cash-out.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Ponzi Deconstruction</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Fiat Flow Analysis</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+                <div class="service-card p-12 border-r border-b border-slate-200 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-8 overflow-hidden h-48 border border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2959213?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Ext">
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 tracking-[.4em] uppercase mb-2 block">Directorate Zeta</span>
+                    <h3 class="heading text-2xl font-extrabold text-slate-900 mb-6 uppercase leading-tight">Digital Extortion</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-8">Neutralizing active threats involving ransomware and extortion. Our bureau acts as a forensic mediator to ensure asset safety and threat containment.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Ransomware Neutralization</li>
+                        <li class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider"><span class="w-1.5 h-1.5 bg-blue-900"></span> Threat Level Assessment</li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-block border-2 border-slate-900 px-6 py-2 text-[11px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition">Deploy Directorate</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="methodology" class="py-24 bg-slate-100 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+            <div data-aos="fade-right">
+                <span class="text-[11px] font-black text-blue-900 uppercase tracking-[.4em] mb-4 block">Official Procedure</span>
+                <h2 class="heading text-4xl font-black mb-8 uppercase text-slate-900 leading-tight">Directorate <br>Standard Operating Protocols</h2>
+                <div class="space-y-8">
+                    <div class="p-6 bg-white shadow-sm border-l-4 border-blue-900">
+                        <h4 class="font-black text-sm mb-2 uppercase text-slate-900 tracking-widest">Protocol 01: Evidence Ingestion</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Categorization of victim assets and hashing of all available digital evidence to ensure chain-of-custody integrity.</p>
+                    </div>
+                    <div class="p-6 bg-white shadow-sm border-l-4 border-blue-900 opacity-70">
+                        <h4 class="font-black text-sm mb-2 uppercase text-slate-900 tracking-widest">Protocol 02: Active Tracing</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Deployment of the proprietary 'BUREAU-EYE' algorithm to map transaction hops and identify end-point exchanges.</p>
+                    </div>
+                    <div class="p-6 bg-white shadow-sm border-l-4 border-blue-900 opacity-50">
+                        <h4 class="font-black text-sm mb-2 uppercase text-slate-900 tracking-widest">Protocol 03: Legal Remediation</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed font-medium">Finalizing the reclamation through official legal pressure and institutional asset transfer.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative" data-aos="fade-left">
+                <div class="monitor-screen p-1 rounded-sm shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" class="w-full grayscale brightness-50" alt="Data Flow">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button onclick="startAudit()" id="auditBtn" class="bg-blue-900/90 text-white px-8 py-4 font-black heading uppercase text-xs tracking-widest hover:bg-white hover:text-blue-900 transition-all border border-blue-400">Run Bureau Audit</button>
+                    </div>
+                </div>
+                <div class="mt-4 text-[10px] font-mono text-slate-400 text-center uppercase tracking-widest">System Monitor: Clearance Level 5 Required</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t-4 border-slate-900 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <h5 class="font-black text-xs uppercase tracking-[.3em] text-slate-900 mb-6">Mission Statement</h5>
+                    <p class="text-slate-500 text-xs leading-relaxed font-medium">To protect the integrity of digital commerce by providing sovereign-grade forensic intelligence and asset recovery services to citizens and corporations worldwide.</p>
+                </div>
+                <div>
+                    <h5 class="font-black text-xs uppercase tracking-[.3em] text-slate-900 mb-6">Directorate Offices</h5>
+                    <ul class="text-slate-500 text-[10px] font-bold uppercase space-y-2 tracking-widest">
+                        <li>> North American Command</li>
+                        <li>> European Union Liaison</li>
+                        <li>> Asia-Pacific Ops Center</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black text-xs uppercase tracking-[.3em] text-slate-900 mb-6">Public Notice</h5>
+                    <div class="p-4 bg-slate-50 border border-slate-200 text-[9px] font-bold text-slate-400 leading-relaxed uppercase">
+                        Fraud Unit is a private intelligence bureau. We are not a government law enforcement agency, but we operate in direct coordination with global legal bodies.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="fraud.jpeg" class="h-10 w-10 opacity-40">
+                    <span class="text-[9px] font-black text-slate-400 tracking-[.5em] uppercase leading-none">FRAUD UNIT INTEL <br> BUREAU © 2012</span>
+                </div>
+                <div class="flex gap-8 text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                    <a href="#" class="hover:text-blue-900 transition">Privacy Protocol</a>
+                    <a href="#" class="hover:text-blue-900 transition">Terms of Service</a>
+                    <a href="#" class="hover:text-blue-900 transition">Legal Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
+
+        // Bureau Audit Simulation
+        function startAudit() {
+            const btn = document.getElementById('auditBtn');
+            const dataDisplay = document.getElementById('live-data');
+            
+            btn.innerHTML = "AUDIT IN PROGRESS...";
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+
+            let dots = 0;
+            const interval = setInterval(() => {
+                dataDisplay.innerHTML = `SCANNING NODE ${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.0.1`;
+                dots++;
+                if(dots > 20) {
+                    clearInterval(interval);
+                    dataDisplay.innerHTML = "[ 12 DISCREPANCIES DETECTED ]";
+                    dataDisplay.style.color = "#ff4444";
+                    alert("OFFICIAL BUREAU ALERT:\n\nSecurity Audit complete. We have detected unauthorized transaction paths in your regional network node. Immediate forensic intervention is recommended. File an official evidence report to begin.");
+                    btn.innerHTML = "AUDIT COMPLETE";
+                }
+            }, 150);
+        }
+
+        // Live monitor text cycle
+        const monitor = document.getElementById('live-data');
+        const phrases = ["[ SYSTEM READY ]", "[ ENCRYPTED LINK ]", "[ MONITORING NODES ]"];
+        let i = 0;
+        setInterval(() => {
+            if(monitor.innerHTML !== "[ 12 DISCREPANCIES DETECTED ]") {
+                monitor.innerHTML = phrases[i % phrases.length];
+                i++;
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
