@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKITE • Global Financial Crime Recovery & Intelligence</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+
+    <script>
+        (function(){
+            emailjs.init("YOUR_PUBLIC_KEY");
+        })();
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 
+                        'h-teal': '#0d9488', 
+                        'h-light': '#f8fafc', 
+                        'h-accent': '#14b8a6',
+                        'h-dark': '#0f172a' 
+                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['Space Mono', 'monospace'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; color: #1e293b; overflow-x: hidden; transition: background-color 0.3s ease; }
+        .dark body { background-color: #020617; color: #f1f5f9; }
+        
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(13, 148, 136, 0.1); }
+        .dark .glass { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(20, 184, 166, 0.2); }
+        
+        .hero-gradient { background: radial-gradient(circle at top right, #ccfbf1, transparent), radial-gradient(circle at bottom left, #f1f5f9, transparent); }
+        .dark .hero-gradient { background: radial-gradient(circle at top right, #134e4a, transparent), radial-gradient(circle at bottom left, #020617, transparent); }
+
+        .wa-float { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .hire-float { position: fixed; bottom: 30px; left: 30px; z-index: 999; }
+        
+        @keyframes pulse-teal { 0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(13, 148, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); } }
+        .animate-pulse-custom { animation: pulse-teal 2s infinite; }
+        
+        #mobile-menu { transition: transform 0.3s ease-in-out; transform: translateX(100%); }
+        #mobile-menu.active { transform: translateX(0); }
+    </style>
+</head>
+<body class="font-sans hero-gradient">
+
+    <button onclick="scrollToSection('careers')" class="hire-float bg-h-dark text-white p-4 rounded-2xl shadow-2xl flex items-center gap-3 hover:bg-h-teal transition-all animate-pulse-custom group">
+        <i data-lucide="briefcase" class="w-6 h-6"></i>
+        <span class="hidden md:block font-bold text-xs uppercase tracking-widest">Hire Agent</span>
+    </button>
+
+    <a href="https://wa.me/+447914612850" target="_blank" class="wa-float bg-[#25D366] p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform">
+        <i data-lucide="message-circle" class="text-white w-8 h-8"></i>
+    </a>
+
+    <nav class="fixed top-0 w-full z-[100] glass border-b border-teal-100 dark:border-teal-900/30">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="p-2 bg-h-teal text-white rounded-lg"><i data-lucide="shield-check"></i></div>
+                <span class="text-2xl font-black tracking-tighter text-h-dark dark:text-white">HACKITE <span class="text-h-teal font-normal text-sm block tracking-widest uppercase lg:inline lg:ml-2">Federal Unit</span></span>
+            </div>
+
+            <div class="hidden lg:flex gap-6 font-bold text-[10px] uppercase tracking-widest text-slate-600 dark:text-slate-400">
+                <a href="about.html" class="hover:text-h-teal transition-colors">Jurisdiction</a>
+                <a href="success.html" class="hover:text-h-teal transition-colors">Case Studies</a>
+                <a href="resources.html" class="hover:text-h-teal transition-colors">Resources</a>
+                <a href="careers.html" class="hover:text-h-teal transition-colors">Careers</a>
+                <a href="intel.html" class="hover:text-h-teal transition-colors">Filing</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="dark-toggle" class="p-2 text-h-dark dark:text-white hover:bg-h-teal/10 rounded-full transition-colors">
+                    <i data-lucide="moon" id="theme-icon"></i>
+                </button>
+                
+                <a href="file.html">
+                <button onclick="scrollToSection('file.html')" class="hidden md:block border-2 border-h-dark dark:border-white text-h-dark dark:text-white px-5 py-2 rounded-full font-bold text-xs uppercase hover:bg-h-dark hover:text-white transition-all">Hire Us</button>
+                <button onclick="scrollToSection('file.html')" class="bg-h-teal text-white px-5 py-2 rounded-full font-bold text-xs uppercase shadow-lg shadow-teal-200 dark:shadow-teal-900/20">Report</button>
+                </a>
+                <button id="menu-toggle" class="lg:hidden p-2 text-h-dark dark:text-white">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[110] bg-h-dark text-white p-10 lg:hidden flex flex-col justify-center">
+        <button id="close-menu" class="absolute top-6 right-6 text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="flex flex-col gap-8 text-2xl font-black uppercase tracking-tighter">
+            <a href="about.html" class="mobile-link">Jurisdiction</a>
+            <a href="success.html" class="mobile-link">Case Studies</a>
+            <a href="resources.html" class="mobile-link">Resources</a>
+            <a href="careers.html" class="mobile-link">Careers</a>
+            <a href="intel.html" class="mobile-link">Filing</a>
+        </div>
+        <div class="mt-12 pt-8 border-t border-white/10">
+            <button onclick="scrollToSection('careers')" class="w-full bg-h-teal py-4 rounded-xl font-bold uppercase text-sm mb-4">Hire An Agent</button>
+            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Hackite Global • Secure Session</p>
+        </div>
+    </div>
+
+    <main class="pt-32">
+        <section class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center mb-32" data-aos="fade-up">
+            <div>
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-h-teal/10 border border-h-teal/20 text-h-teal text-[10px] font-bold uppercase mb-6">
+                    <span class="w-2 h-2 rounded-full bg-h-teal animate-pulse"></span> SECURE ACCESS GRANTED: ASSET RECOVERY PORTAL
+                </div>
+                <h1 class="text-6xl md:text-8xl font-extrabold text-h-dark dark:text-white leading-none mb-8 tracking-tighter">
+                    Restoring <span class="text-h-teal">Justice</span> in the Digital Age.
+                </h1>
+                <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl mb-10 leading-relaxed border-l-4 border-h-teal pl-6">
+                    The world's most advanced task force for recovering lost cryptocurrency, NFTs, and stolen identity assets. Licensed, bonded, and internationally recognized.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="scrollToSection('intel')" class="px-10 py-5 bg-h-dark dark:bg-h-teal text-white font-black rounded-2xl shadow-xl hover:bg-h-teal dark:hover:bg-h-accent transition-all flex items-center gap-3">
+                        START INVESTIGATION <i data-lucide="arrow-right"></i>
+                    </button>
+                    <button onclick="scrollToSection('success')" class="px-10 py-5 glass border-2 border-slate-200 dark:border-slate-800 text-h-dark dark:text-white font-black rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all">
+                        SUCCESS STORIES
+                    </button>
+                </div>
+            </div>
+            <div class="relative" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1000" alt="Cyber Forensics" class="rounded-[4rem] shadow-2xl object-cover h-[500px] w-full">
+                <div class="absolute -bottom-10 right-10 glass p-8 rounded-3xl border border-h-teal/30 shadow-2xl max-w-sm">
+                    <div class="text-4xl font-black text-h-teal mb-2">$4.2B+</div>
+                    <div class="text-xs font-mono uppercase text-slate-500 tracking-tighter">Liquidated Assets recovered for victims since 2019.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-6 mb-32 grid grid-cols-2 md:grid-cols-4 gap-6" data-aos="fade-up">
+            <div class="bg-white dark:bg-slate-900/50 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="text-slate-400 text-[10px] font-mono mb-2">AVG RECOVERY TIME</div>
+                <div class="text-xl font-black dark:text-white">14-21 Days</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900/50 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="text-slate-400 text-[10px] font-mono mb-2">SUCCESS RATE</div>
+                <div class="text-xl font-black text-h-teal">94.2%</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900/50 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="text-slate-400 text-[10px] font-mono mb-2">ACTIVE AGENTS</div>
+                <div class="text-xl font-black dark:text-white">142 Worldwide</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900/50 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="text-slate-400 text-[10px] font-mono mb-2">CEX PARTNERS</div>
+                <div class="text-xl font-black dark:text-white">18+ Exchanges</div>
+            </div>
+        </section>
+
+        <section id="success" class="bg-slate-50 dark:bg-slate-900/30 py-32 px-6 mb-32">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="text-5xl font-black text-h-dark dark:text-white mb-4" data-aos="fade-up">Global Case Successes</h2>
+                    <p class="text-slate-500 max-w-2xl mx-auto">Real outcomes from our international forensics laboratory.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-h-dark rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=600" class="h-48 w-full object-cover">
+                        <div class="p-8">
+                            <span class="text-h-teal font-bold text-[10px] uppercase">Pig Butchering Scam</span>
+                            <h3 class="text-xl font-bold mt-2 mb-4 text-h-dark dark:text-white">The "Phoenix" Recovery</h3>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed">Recovered $1.2M USDT for a victim in Australia by tracking funds through 4 mixer protocols.</p>
+                            <div class="flex items-center justify-between pt-6 border-t border-slate-50 dark:border-slate-800">
+                                <span class="font-mono text-[10px] text-slate-400">ID: #HK-9920</span>
+                                <span class="text-h-teal font-bold text-xs italic">STATUS: RECOVERED</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-h-dark rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <img src="https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=600" class="h-48 w-full object-cover">
+                        <div class="p-8">
+                            <span class="text-h-teal font-bold text-[10px] uppercase">Phishing Injunction</span>
+                            <h3 class="text-xl font-bold mt-2 mb-4 text-h-dark dark:text-white">Wallet Drainer Takedown</h3>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed">Collaborated with Metamask and Binance to freeze 45 ETH stolen via a malicious smart contract.</p>
+                            <div class="flex items-center justify-between pt-6 border-t border-slate-50 dark:border-slate-800">
+                                <span class="font-mono text-[10px] text-slate-400">ID: #HK-1022</span>
+                                <span class="text-h-teal font-bold text-xs italic">STATUS: RECOVERED</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-h-dark rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=600" class="h-48 w-full object-cover">
+                        <div class="p-8">
+                            <span class="text-h-teal font-bold text-[10px] uppercase">Exchange Hack</span>
+                            <h3 class="text-xl font-bold mt-2 mb-4 text-h-dark dark:text-white">The Crypto-Vault Breach</h3>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed">Secured legal restitution for 14 clients affected by an offshore exchange collapse.</p>
+                            <div class="flex items-center justify-between pt-6 border-t border-slate-50 dark:border-slate-800">
+                                <span class="font-mono text-[10px] text-slate-400">ID: #HK-8821</span>
+                                <span class="text-h-teal font-bold text-xs italic">STATUS: CLOSED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="max-w-7xl mx-auto px-6 mb-32" data-aos="fade-right">
+            <div class="glass p-12 rounded-[3rem]">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-black mb-6 dark:text-white">Victim Support Resources</h2>
+                        <p class="text-slate-600 dark:text-slate-400 mb-8 italic font-light">Being scammed is traumatic. We provide tools to help you take back control.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 p-4 hover:bg-h-teal/5 rounded-2xl transition-all cursor-pointer">
+                                <i data-lucide="file-text" class="text-h-teal"></i>
+                                <div>
+                                    <h4 class="font-bold text-sm dark:text-white">Police Report Template</h4>
+                                    <p class="text-xs text-slate-400">Standardized formats for FBI (IC3) and Interpol.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 hover:bg-h-teal/5 rounded-2xl transition-all cursor-pointer">
+                                <i data-lucide="shield-alert" class="text-h-teal"></i>
+                                <div>
+                                    <h4 class="font-bold text-sm dark:text-white">Wallet Hardening Guide</h4>
+                                    <p class="text-xs text-slate-400">Secure your remaining assets immediately.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=400" class="rounded-3xl h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=400" class="rounded-3xl h-64 w-full object-cover mt-8">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="intel" class="max-w-7xl mx-auto px-6 mb-32" data-aos="fade-up">
+            <div class="bg-h-dark rounded-[3rem] p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-10 opacity-10">
+                    <i data-lucide="binary" class="w-64 h-64"></i>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+                    <div>
+                        <h2 class="text-5xl font-black mb-6">File a <span class="text-h-teal italic">Recovery Intake</span></h2>
+                        <form id="recovery-form" class="grid grid-cols-2 gap-4">
+                            <input type="text" name="user_name" placeholder="Legal Name" class="col-span-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-h-teal" required>
+                            <input type="email" name="user_email" placeholder="Email Address" class="col-span-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-h-teal" required>
+                            <input type="text" name="txid" placeholder="Transaction ID (TXID/Hash)" class="col-span-2 bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-h-teal">
+                            <select name="asset_type" class="col-span-1 bg-h-dark border border-white/10 p-4 rounded-xl outline-none text-slate-400">
+                                <option>Bitcoin (BTC)</option>
+                                <option>Ethereum (ETH)</option>
+                                <option>USDT / USDC</option>
+                                <option>Other</option>
+                            </select>
+                            <input type="text" name="amount" placeholder="Amount Lost" class="col-span-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-h-teal">
+                            <textarea name="details" placeholder="How did it happen?" class="col-span-2 bg-white/5 border border-white/10 p-4 rounded-xl h-32 outline-none focus:border-h-teal"></textarea>
+                            <button type="submit" class="col-span-2 py-5 bg-h-teal text-white font-black rounded-xl hover:bg-h-accent shadow-xl shadow-teal-900/40 uppercase tracking-[0.2em]">
+                                DISPATCH FORENSICS ENGINE
+                            </button>
+                        </form>
+                    </div>
+                    <div class="hidden lg:block">
+                        <div class="glass p-10 rounded-[3rem]">
+                            <h4 class="text-h-teal font-mono text-xs mb-6 uppercase tracking-widest">Live Recovery Queue</h4>
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-4 border-b border-white/5 pb-4">
+                                    <div class="w-10 h-10 rounded-full bg-h-teal/20 flex items-center justify-center text-h-teal font-black text-xs">01</div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-bold">TXID Trace Active</div>
+                                        <div class="text-[10px] text-slate-500 font-mono">Status: Routing to Binance Compliance</div>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-h-teal/20 flex items-center justify-center text-h-teal font-black text-xs">02</div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-bold">Injunction Granted</div>
+                                        <div class="text-[10px] text-slate-500 font-mono">Status: Assets Frozen (14.2 BTC)</div>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full bg-h-teal"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="careers" class="max-w-7xl mx-auto px-6 mb-32" data-aos="zoom-in-up">
+            <div class="bg-h-teal rounded-[4rem] p-16 text-center text-white shadow-2xl">
+                <h2 class="text-5xl font-black mb-6">Join the Fight. <br>Hire a <span class="text-h-dark italic">Private Agent.</span></h2>
+                <div class="flex flex-wrap justify-center gap-6 mt-12">
+                    <button onclick="alert('Portal opening soon!')" class="bg-h-dark px-10 py-5 rounded-2xl font-black text-xs uppercase hover:scale-105 transition-all">Apply to Team</button>
+                    <button onclick="scrollToSection('intel')" class="bg-white text-h-teal px-10 py-5 rounded-2xl font-black text-xs uppercase hover:scale-105 transition-all">Retain an Agent</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-white dark:bg-h-dark border-t border-slate-100 dark:border-slate-800 pt-20 pb-10">
+            <div class="text-center text-[10px] text-slate-400 font-mono tracking-widest uppercase">
+                © 2026 HACKITE FEDERAL RECOVERY UNIT. ALL RIGHTS RESERVED. 
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        lucide.createIcons();
+
+        // Dark Mode Logic (New)
+        const darkToggle = document.getElementById('dark-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        darkToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            themeIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            lucide.createIcons();
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
+            lucide.createIcons();
+        }
+
+        // Navigation & Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeMenu.addEventListener('click', () => mobileMenu.classList.remove('active'));
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('active')));
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form Submission
+        const form = document.getElementById('recovery-form');
+        form.onsubmit = function(e) {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            btn.innerText = "AUTHENTICATING...";
+            
+            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+                .then(() => {
+                    alert('INTAKE SUCCESSFUL. Your tracking number is HK-'+Math.floor(Math.random()*10000));
+                    btn.innerText = "DISPATCH FORENSICS ENGINE";
+                    form.reset();
+                }, (error) => {
+                    alert('FAILED: ' + JSON.stringify(error));
+                    btn.innerText = "RETRY";
+                });
+        };
+    </script>
+</body>
+</html>

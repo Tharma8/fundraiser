@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FILE A REPORT • HACKITE INTELLIGENCE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 'h-teal': '#0d9488', 'h-dark': '#010409', 'h-border': '#1e293b', 'h-danger': '#f43f5e' },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #010409; color: #f8fafc; overflow-x: hidden; }
+        .crp-grid { background-image: radial-gradient(#0d9488 0.5px, transparent 0.5px); background-size: 30px 30px; opacity: 0.05; }
+        
+        /* Advanced Hover Effects */
+        .field-group { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+        .field-group:hover { transform: translateX(10px); }
+        .field-group:hover label { color: #0d9488; letter-spacing: 0.1em; }
+
+        .glass-input { 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(30, 41, 59, 0.7); 
+            border-radius: 12px; 
+            padding: 16px; 
+            width: 100%; 
+            color: white; 
+            transition: all 0.3s;
+        }
+        .glass-input:focus { 
+            border-color: #0d9488; 
+            outline: none; 
+            background: rgba(13, 148, 136, 0.08);
+            box-shadow: 0 0 20px rgba(13, 148, 136, 0.1);
+        }
+
+        .step-pill { width: 100%; height: 4px; border-radius: 2px; background: #1e293b; transition: all 0.6s ease; }
+        .step-pill.active { background: #0d9488; box-shadow: 0 0 10px #0d9488; }
+        
+        .shimmer-btn {
+            position: relative; overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg); animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="fixed inset-0 crp-grid pointer-events-none"></div>
+
+    <nav class="fixed top-0 w-full z-50 bg-h-dark/90 border-b border-h-border p-5 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-h-danger rounded-full animate-pulse"></div>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-slate-400">Secure_Intake_Active</span>
+            </div>
+            <a href="index.html" class="text-[10px] font-mono border border-white/10 px-4 py-2 rounded-lg hover:bg-h-danger hover:text-white transition-all">EXIT_SESSION</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-4 md:px-6 max-w-4xl mx-auto">
+        <header class="text-center mb-16" data-aos="zoom-in">
+            <h1 class="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 leading-none">
+                Submit <span class="text-h-teal italic underline decoration-h-teal/30">Intelligence.</span>
+            </h1>
+            <p class="text-slate-500 font-mono text-[10px] uppercase tracking-[0.4em]">Cryptographic Case Intake Protocol // 2026</p>
+        </header>
+
+        <div class="flex gap-2 mb-10">
+            <div class="step-pill active"></div>
+            <div class="step-pill active"></div>
+            <div class="step-pill active"></div>
+            <div class="step-pill active"></div>
+        </div>
+
+        <div class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 md:p-12 shadow-2xl backdrop-blur-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-h-teal/5 blur-3xl rounded-full"></div>
+
+            <form id="reportForm" class="space-y-12">
+                
+                <div class="space-y-8" data-aos="fade-up">
+                    <h2 class="text-sm font-mono text-h-teal flex items-center gap-3 font-bold uppercase tracking-widest">
+                        <span class="bg-h-teal/10 p-2 rounded-lg"><i data-lucide="shield-alert" class="w-4 h-4"></i></span> 
+                        01. Threat Actor Profile
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Scammer Alias / Username</label>
+                            <input type="text" id="scammerName" placeholder="e.g. 'Capt. Miller' / @AlexForex" class="glass-input">
+                        </div>
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Phone Number / Handle Used</label>
+                            <input type="text" id="contactInfo" placeholder="+1 (xxx) xxx-xxxx" class="glass-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8" data-aos="fade-up">
+                    <h2 class="text-sm font-mono text-h-teal flex items-center gap-3 font-bold uppercase tracking-widest">
+                        <span class="bg-h-teal/10 p-2 rounded-lg"><i data-lucide="database" class="w-4 h-4"></i></span> 
+                        02. Financial Extraction Details
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">How was payment made?</label>
+                            <select id="paymentMethod" class="glass-input">
+                                <option value="Bitcoin / Crypto">Bitcoin / Crypto</option>
+                                <option value="Bank Wire">Bank Wire / Swift</option>
+                                <option value="Gift Cards">Gift Cards (Razer/Apple)</option>
+                                <option value="Zelle / CashApp">Zelle / CashApp / PayPal</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Total Amount Lost (USD)</label>
+                            <input type="number" id="amount" placeholder="5000" class="glass-input">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Wallet Address (If Crypto)</label>
+                        <input type="text" id="walletAddress" placeholder="0x... or bc1..." class="glass-input">
+                    </div>
+                </div>
+
+                <div class="space-y-8" data-aos="fade-up">
+                    <h2 class="text-sm font-mono text-h-teal flex items-center gap-3 font-bold uppercase tracking-widest">
+                        <span class="bg-h-teal/10 p-2 rounded-lg"><i data-lucide="brain-circuit" class="w-4 h-4"></i></span> 
+                        03. Psychological Tactics
+                    </h2>
+                    
+                    <div class="field-group">
+                        <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Initial Contact Method (Storyline)</label>
+                        <textarea id="description" rows="4" placeholder="Describe the 'hook' - e.g. 'They claimed to be a doctor in the military' or 'They sent a fake investment link'..." class="glass-input"></textarea>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Relationship Duration</label>
+                            <input type="text" id="duration" placeholder="e.g. 3 Months" class="glass-input">
+                        </div>
+                        <div class="field-group">
+                            <label class="block text-[9px] font-mono uppercase text-slate-500 mb-3 transition-all">Date of Last Transaction</label>
+                            <input type="date" id="lastDate" class="glass-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-10" data-aos="zoom-in">
+                    <button type="button" onclick="submitReport()" class="shimmer-btn w-full bg-h-teal text-h-dark font-black py-8 rounded-2xl uppercase tracking-[0.4em] text-sm hover:tracking-[0.6em] transition-all duration-500 shadow-[0_20px_50px_rgba(13,148,136,0.3)]">
+                        Deploy Report to HQ
+                    </button>
+                    <p class="text-center mt-6 font-mono text-[8px] text-slate-600 uppercase tracking-widest">By clicking, you initiate a secure WhatsApp link with the dossier attached.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-16 p-8 border border-white/5 rounded-3xl bg-white/[0.02] flex flex-col md:flex-row items-center gap-6" data-aos="fade-up">
+            <div class="w-16 h-16 rounded-full bg-h-danger/10 flex items-center justify-center text-h-danger">
+                <i data-lucide="lock" class="w-8 h-8"></i>
+            </div>
+            <div class="text-center md:text-left">
+                <h4 class="text-xs font-black uppercase tracking-widest mb-1">End-to-End Encryption Notice</h4>
+                <p class="text-[10px] text-slate-500 font-mono">Your data is formatted locally. Once you click deploy, the information is sent via your personal WhatsApp, ensuring Hackite never stores your identity on public servers.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center opacity-30 font-mono text-[9px] uppercase tracking-[0.8em]">
+        HACKITE_SYSTEMS_GLOBAL // 2026 // CASE_INTAKE_PORTAL
+    </footer>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        lucide.createIcons();
+
+        function submitReport() {
+            // Collecting 10 Data Points
+            const name = document.getElementById('scammerName').value || 'NOT_PROVIDED';
+            const handle = document.getElementById('contactInfo').value || 'NOT_PROVIDED';
+            const method = document.getElementById('paymentMethod').value;
+            const amt = document.getElementById('amount').value || '0.00';
+            const wallet = document.getElementById('walletAddress').value || 'NONE_OR_UNKNOWN';
+            const story = document.getElementById('description').value || 'NO_STORY_DATA';
+            const duration = document.getElementById('duration').value || 'UNKNOWN';
+            const lastDate = document.getElementById('lastDate').value || 'UNKNOWN';
+
+            // WhatsApp Professional Formatting
+            const message = 
+                `🛡️ *HACKITE CASE INTAKE REPORT* 🛡️%0A` +
+                `=============================%0A` +
+                `👤 *TARGET ALIAS:* ${name.toUpperCase()}%0A` +
+                `📱 *CONTACT INFO:* ${handle}%0A` +
+                `💰 *LOSS AMOUNT:* $${amt} USD%0A` +
+                `💳 *PAYMENT TYPE:* ${method}%0A` +
+                `🏦 *WALLET/BANK:* ${wallet}%0A%0A` +
+                `*--- SCAM ANALYSIS ---*%0A` +
+                `⏳ *DURATION:* ${duration}%0A` +
+                `📅 *LAST CONTACT:* ${lastDate}%0A` +
+                `📝 *NARRATIVE:*%0A${story}%0A%0A` +
+                `*--- ACTION REQUIRED ---*%0A` +
+                `⚠️ _Requesting Immediate Retrace and Refund Analysis._`;
+
+            // Replace with your actual WhatsApp number
+            const whatsappNumber = "+447914612850"; 
+            
+            // Redirect with animation delay
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+            }, 300);
+        }
+    </script>
+</body>
+</html>

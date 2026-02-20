@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE LOCKER • HACKITE FEDERAL UNIT</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 'h-teal': '#0d9488', 'h-dark': '#020617', 'h-gray': '#0f172a', 'h-accent': '#14b8a6' },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['Space Mono', 'monospace'] },
+                    animation: { 
+                        'float': 'float 6s ease-in-out infinite', 
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'matrix': 'matrix 20s linear infinite'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(1deg); } }
+        @keyframes matrix { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
+        
+        .hex-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l17.32 10v20L20 40 2.68 30V10z' fill-opacity='0.03' fill='%230d9488'/%3E%3C/svg%3E");
+        }
+
+        .case-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 1));
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.1) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.6s;
+        }
+
+        .case-card:hover::before { opacity: 1; }
+        .case-card:hover { border-color: #0d9488; transform: translateY(-15px) rotateX(2deg); box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.3); }
+
+        .terminal-loader {
+            border-right: 2px solid #0d9488;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #020617; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-h-dark text-slate-100 font-sans overflow-x-hidden hex-grid custom-scrollbar">
+
+    <nav class="fixed top-0 w-full z-[100] bg-h-dark/80 backdrop-blur-md border-b border-h-teal/20 px-6 py-3">
+        <div class="max-w-7xl mx-auto flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.3em]">
+            <div class="flex items-center gap-4 text-h-teal">
+                <span class="flex h-2 w-2 rounded-full bg-h-teal animate-pulse-fast"></span>
+                LIVE_NODE: ENCRYPTED
+            </div>
+            <div class="hidden md:block">LATENCY: 14MS // SECTOR: DATA_RECOVERY_ARCHIVE</div>
+            <a href="index.html" class="hover:text-h-teal transition-colors">Terminate Session [X]</a>
+        </div>
+    </nav>
+
+    <header class="pt-48 pb-20 px-6 max-w-7xl mx-auto relative">
+        <div class="grid lg:grid-cols-2 gap-12 items-end">
+            <div data-aos="fade-right">
+                <h1 class="text-xs font-mono tracking-[1em] text-h-teal mb-6 uppercase">Operational Success</h1>
+                <p class="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.8]">
+                    CASE <br><span class="text-h-teal italic">FILES</span>.
+                </p>
+                <p class="max-w-md text-slate-400 text-sm font-mono leading-relaxed border-l-2 border-h-teal/30 pl-6">
+                    [ANALYSIS] Deep-chain investigations resulting in successful asset repatriation. All data shown has been scrubbed of PII (Personally Identifiable Information).
+                </p>
+            </div>
+            <div class="bg-black/50 p-6 rounded-xl border border-h-teal/10 font-mono text-[11px] text-h-teal/70 hidden lg:block" data-aos="zoom-in">
+                <div class="flex gap-2 mb-4"><div class="w-3 h-3 rounded-full bg-red-500/20"></div><div class="w-3 h-3 rounded-full bg-yellow-500/20"></div><div class="w-3 h-3 rounded-full bg-h-teal/20"></div></div>
+                <p class="mb-1">> SCANNING_BLOCKCHAIN_LEDGER...</p>
+                <p class="mb-1">> IDENTIFIED_OUTFLOW: 4,209.12 BTC</p>
+                <p class="mb-1">> CLUSTER_DETECTION: MIXER_PATTERN_ALPHA</p>
+                <p class="mb-1">> INITIATING_HACKITE_VORTEX...</p>
+                <p class="text-white">> SUCCESS: ASSETS_LOCKED_IN_ESCROW</p>
+                <p class="terminal-loader inline-block w-2 h-4 bg-h-teal ml-1"></p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <div class="case-card rounded-[2.5rem] p-8 flex flex-col group" data-aos="fade-up">
+                <div class="mb-8 relative overflow-hidden rounded-2xl h-48">
+                    <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-h-teal/20 mix-blend-overlay"></div>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="px-3 py-1 bg-h-teal/10 text-h-teal text-[10px] font-mono rounded-full border border-h-teal/20">BTC_TRACE</span>
+                        <span class="px-3 py-1 bg-white/5 text-slate-400 text-[10px] font-mono rounded-full">HIGH_PRIORITY</span>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4 group-hover:text-h-teal transition-colors uppercase">The Shadow Wallet</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed mb-6">Intercepted a multi-hop laundering operation moving stolen liquidity through 8 countries. Recovered at exit point before cold-storage transition.</p>
+                </div>
+                <div class="pt-6 border-t border-h-teal/10 flex justify-between items-center">
+                    <div>
+                        <p class="text-[9px] uppercase font-mono text-slate-500">Recovered</p>
+                        <p class="font-black text-h-teal text-xl">$1.24M</p>
+                    </div>
+                    <i data-lucide="shield-check" class="text-h-teal w-8 h-8 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+            </div>
+
+            <div class="case-card rounded-[2.5rem] p-8 flex flex-col group" data-aos="fade-up" data-aos-delay="100">
+                <div class="mb-8 relative overflow-hidden rounded-2xl h-48">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-h-teal/20 mix-blend-overlay"></div>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="px-3 py-1 bg-h-teal/10 text-h-teal text-[10px] font-mono rounded-full border border-h-teal/20">SMART_CONTRACT</span>
+                        <span class="px-3 py-1 bg-white/5 text-slate-400 text-[10px] font-mono rounded-full">EXPLOIT_REVERSAL</span>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4 group-hover:text-h-teal transition-colors uppercase">Contract Breach 09</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed mb-6">A DeFi protocol rug-pull was neutralized by our agents through a white-hat counter-exploit, draining the drainer's bridge wallet.</p>
+                </div>
+                <div class="pt-6 border-t border-h-teal/10 flex justify-between items-center">
+                    <div>
+                        <p class="text-[9px] uppercase font-mono text-slate-500">Recovered</p>
+                        <p class="font-black text-h-teal text-xl">$640K</p>
+                    </div>
+                    <i data-lucide="zap" class="text-h-teal w-8 h-8 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+            </div>
+
+            <div class="case-card rounded-[2.5rem] p-8 flex flex-col group" data-aos="fade-up" data-aos-delay="200">
+                <div class="mb-8 relative overflow-hidden rounded-2xl h-48">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-h-teal/20 mix-blend-overlay"></div>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="px-3 py-1 bg-h-teal/10 text-h-teal text-[10px] font-mono rounded-full border border-h-teal/20">NFT_FRAUD</span>
+                        <span class="px-3 py-1 bg-white/5 text-slate-400 text-[10px] font-mono rounded-full">INTERPOL_LED</span>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4 group-hover:text-h-teal transition-colors uppercase">The Silk Exchange</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed mb-6">Cross-border coordination led to the seizure of domain assets and 400 ETH from a phishing syndicate operating out of Eastern Europe.</p>
+                </div>
+                <div class="pt-6 border-t border-h-teal/10 flex justify-between items-center">
+                    <div>
+                        <p class="text-[9px] uppercase font-mono text-slate-500">Recovered</p>
+                        <p class="font-black text-h-teal text-xl">$1.02M</p>
+                    </div>
+                    <i data-lucide="globe" class="text-h-teal w-8 h-8 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-32 bg-h-teal/5 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black mb-4 uppercase">Global Forensic <span class="text-h-teal italic">Presence</span></h2>
+                <p class="text-slate-500 font-mono text-xs uppercase tracking-widest">Active nodes in 140+ Jurisdictions</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative aspect-square flex items-center justify-center" data-aos="zoom-in">
+                    <div class="absolute inset-0 border border-h-teal/20 rounded-full animate-pulse"></div>
+                    <div class="absolute inset-20 border border-h-teal/10 rounded-full animate-pulse-slow"></div>
+                    <div class="w-full h-px bg-h-teal/20 animate-spin" style="animation-duration: 10s;"></div>
+                    <div class="absolute p-4 glass-panel rounded-lg text-[10px] font-mono animate-float top-0 left-0">EU_SERVER: ACTIVE</div>
+                    <div class="absolute p-4 glass-panel rounded-lg text-[10px] font-mono animate-float bottom-10 right-0">ASIAN_NODE: ACTIVE</div>
+                    <div class="absolute p-4 glass-panel rounded-lg text-[10px] font-mono animate-float top-20 right-10">US_LIAISON: ACTIVE</div>
+                    <i data-lucide="crosshair" class="w-12 h-12 text-h-teal opacity-50"></i>
+                </div>
+
+                <div class="space-y-12">
+                    <div class="flex gap-6 group" data-aos="fade-left">
+                        <div class="w-12 h-12 rounded-xl bg-h-teal/10 flex items-center justify-center text-h-teal group-hover:bg-h-teal group-hover:text-white transition-all">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg uppercase tracking-tight">Direct API Freeze</h4>
+                            <p class="text-slate-500 text-sm">We maintain direct API hooks into major exchanges (Binance, Kraken, Coinbase) for instantaneous asset locking.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group" data-aos="fade-left" data-aos-delay="100">
+                        <div class="w-12 h-12 rounded-xl bg-h-teal/10 flex items-center justify-center text-h-teal group-hover:bg-h-teal group-hover:text-white transition-all">
+                            <i data-lucide="database"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg uppercase tracking-tight">Vortex Forensics</h4>
+                            <p class="text-slate-500 text-sm">Proprietary pattern-recognition AI that de-mixes transactions across 12 different blockchain privacy protocols.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group" data-aos="fade-left" data-aos-delay="200">
+                        <div class="w-12 h-12 rounded-xl bg-h-teal/10 flex items-center justify-center text-h-teal group-hover:bg-h-teal group-hover:text-white transition-all">
+                            <i data-lucide="scale"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg uppercase tracking-tight">Judicial Liaisons</h4>
+                            <p class="text-slate-500 text-sm">On-staff legal experts specialized in international mutual legal assistance treaties (MLAT).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 bg-h-dark border-y border-h-teal/10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 text-center">
+            <div data-aos="fade-up">
+                <p class="text-[10px] font-mono text-h-teal uppercase mb-2">Total Recovered</p>
+                <h3 class="text-5xl font-black font-mono">$890M+</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="100">
+                <p class="text-[10px] font-mono text-h-teal uppercase mb-2">Success Rate</p>
+                <h3 class="text-5xl font-black font-mono">94.2%</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <p class="text-[10px] font-mono text-h-teal uppercase mb-2">Daily Investigations</p>
+                <h3 class="text-5xl font-black font-mono">120</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <p class="text-[10px] font-mono text-h-teal uppercase mb-2">Active Agents</p>
+                <h3 class="text-5xl font-black font-mono">450</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-48 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-h-teal/5 animate-matrix opacity-20"></div>
+        <div class="relative z-10 px-6">
+            <h2 class="text-5xl md:text-8xl font-black mb-10 tracking-tighter uppercase leading-[0.85]">Become a <br><span class="text-h-teal italic">Case Study</span>.</h2>
+            <div class="flex flex-wrap justify-center gap-6 mt-12">
+                <a href="index.html#intel" class="px-12 py-5 bg-h-teal text-white font-bold rounded-2xl shadow-2xl shadow-teal-500/50 hover:scale-110 transition-all uppercase tracking-[0.2em] text-[10px]">Initiate File Recovery</a>
+                <a href="about.html" class="px-12 py-5 border border-h-teal/30 hover:bg-h-teal/10 text-white font-bold rounded-2xl transition-all uppercase tracking-[0.2em] text-[10px]">Internal Dossier</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-h-teal/10 bg-h-dark px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-h-teal rounded-lg flex items-center justify-center text-white"><i data-lucide="shield"></i></div>
+                <span class="font-black text-sm tracking-tighter uppercase">Hackite <span class="text-h-teal">Federal</span></span>
+            </div>
+            <div class="font-mono text-[9px] text-slate-500 flex gap-8">
+                <span>ENCRYPTION: AES_256</span>
+                <span>CLEARANCE: LEVEL_4</span>
+                <span>© 2026 HF-UNIT</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        lucide.createIcons();
+
+        // Feature 11: 3D Tilt Effect on Cards
+        const cards = document.querySelectorAll('.case-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = x - xc;
+                const dy = y - yc;
+                card.style.transform = `perspective(1000px) rotateX(${dy / -20}deg) rotateY(${dx / 20}deg) translateY(-15px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // Dark Mode Logic Persistence
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</body>
+</html>

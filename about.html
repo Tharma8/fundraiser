@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSSIER • HACKITE FEDERAL UNIT</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 'h-teal': '#0d9488', 'h-dark': '#020617', 'h-gray': '#0f172a' },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['Space Mono', 'monospace'] },
+                    animation: { 'marquee': 'marquee 25s linear infinite', 'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        
+        .parallax-bg {
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .glass-panel {
+            background: rgba(2, 6, 23, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+        }
+        .scanline {
+            width: 100%; height: 100px; z-index: 10;
+            background: linear-gradient(0deg, rgba(13, 148, 136, 0) 0%, rgba(13, 148, 136, 0.15) 50%, rgba(13, 148, 136, 0) 100%);
+            position: absolute; bottom: 100%; animation: scan 6s linear infinite;
+        }
+        @keyframes scan { 0% { bottom: 100%; } 100% { bottom: -100%; } }
+        
+        .custom-cursor {
+            width: 20px; height: 20px; border: 1px solid #0d9488; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s ease;
+        }
+        
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-white dark:bg-h-dark text-slate-900 dark:text-slate-100 font-sans overflow-x-hidden">
+
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-h-teal/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-h-teal rounded-lg flex items-center justify-center">
+                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
+                </div>
+                <span class="font-black tracking-tighter text-xl">HACKITE <span class="text-h-teal">FEDERAL</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest">
+                <a href="index.html" class="hover:text-h-teal transition-colors">Home</a>
+                <a href="#vision" class="hover:text-h-teal transition-colors">Vision</a>
+                <a href="#stats" class="hover:text-h-teal transition-colors">Forensics</a>
+                <a href="file.html" class="px-4 py-2 bg-h-teal text-white rounded-lg">File Report</a>
+            </div>
+            <button class="md:hidden text-h-teal"><i data-lucide="menu"></i></button>
+        </div>
+    </nav>
+
+    <div class="fixed bottom-0 w-full bg-h-teal text-white z-50 overflow-hidden py-1 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <div class="flex whitespace-nowrap animate-marquee">
+            <span class="mx-4">● [SYSTEM STATUS: ACTIVE]</span>
+            <span class="mx-4">● [ASSET RECOVERY: $14.2M IN LAST 24H]</span>
+            <span class="mx-4">● [NODES ACTIVE: GENEVA, SINGAPORE, DC, LAGOS]</span>
+            <span class="mx-4">● [ENCRYPTION: AES-256 BIT]</span>
+            <span class="mx-4">● [SYSTEM STATUS: ACTIVE]</span>
+            <span class="mx-4">● [ASSET RECOVERY: $14.2M IN LAST 24H]</span>
+            <span class="mx-4">● [NODES ACTIVE: GENEVA, SINGAPORE, DC, LAGOS]</span>
+        </div>
+    </div>
+
+    <section class="relative min-h-screen flex items-center justify-center parallax-bg overflow-hidden" id="vision">
+        <div class="absolute inset-0 bg-h-dark/80 dark:bg-h-dark/95"></div>
+        <div class="scanline"></div>
+        
+        <div class="absolute top-1/4 left-10 opacity-20 hidden lg:block font-mono text-xs text-h-teal">
+            <p>> TRACING_PACKET_LOSS...</p>
+            <p>> ENCRYPTING_PIPELINE...</p>
+            <p>> BYPASSING_FIREWALL_v4.2</p>
+        </div>
+
+        <div class="relative z-10 max-w-5xl px-6 text-center" data-aos="zoom-out">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-h-teal/30 bg-h-teal/10 text-h-teal text-[10px] font-mono mb-6 animate-pulse-slow">
+                <span class="w-2 h-2 rounded-full bg-h-teal animate-ping"></span>
+                SECURE ACCESS GRANTED: 127.0.0.1
+            </div>
+            <h1 class="text-xs font-mono tracking-[0.6em] text-h-teal mb-6 uppercase">Beyond The Digital Horizon</h1>
+            <p class="text-6xl md:text-[10rem] font-black tracking-tighter text-white mb-8 leading-none">
+                CORE <span class="text-h-teal">UNIT</span>
+            </p>
+            <p class="text-lg md:text-2xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto italic">
+                "We operate in the space between the theft and the exchange. Where others see a dead-end hash, we see a trail."
+            </p>
+        </div>
+    </section>
+
+    <section class="py-24 bg-slate-50 dark:bg-h-gray relative" id="stats">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="fade-up">
+                <h3 class="text-5xl font-black text-h-teal mb-2 font-mono">2.4k+</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60">Cases Resolved</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-5xl font-black text-h-teal mb-2 font-mono">$890M</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60">Assets Clawed Back</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-5xl font-black text-h-teal mb-2 font-mono">140+</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60">Global Liaisons</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-5xl font-black text-h-teal mb-2 font-mono">0.02s</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60">Trace Latency</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-20 items-center mb-32">
+            <div data-aos="fade-right" class="relative group">
+                <div class="absolute -inset-4 bg-h-teal/20 rounded-[3rem] blur-2xl group-hover:bg-h-teal/30 transition-all"></div>
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000" 
+                     class="relative rounded-[3rem] shadow-2xl border border-h-teal/20 z-10 grayscale hover:grayscale-0 transition-all duration-700" alt="Cyber Grid">
+                <div class="absolute bottom-10 left-10 z-20 glass-panel p-6 rounded-2xl hidden md:block">
+                    <p class="font-mono text-[10px] text-h-teal uppercase">Neural Map v.09</p>
+                    <p class="text-xs text-white">Live Tracking of Ethereum Mixers</p>
+                </div>
+            </div>
+            <div data-aos="fade-left">
+                <h2 class="text-5xl font-black mb-8 leading-tight">Digital <span class="text-h-teal italic">Sovereignty</span></h2>
+                <p class="text-slate-500 mb-10 leading-relaxed text-lg">
+                    HACKITE isn't just a firm; it's a specialized task force. We leverage legal loopholes and aggressive forensic maneuvers to bypass decentralized obfuscation protocols. When your funds disappear into a mixer, we are the ones waiting on the other side.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 border border-slate-200 dark:border-h-teal/10 rounded-2xl hover:border-h-teal transition-all">
+                        <i data-lucide="zap" class="text-h-teal mb-3 w-5 h-5"></i>
+                        <h5 class="font-bold mb-2">Instant Response</h5>
+                        <p class="text-xs text-slate-400">Response teams deployed within 15 minutes of tier-1 breach notification.</p>
+                    </div>
+                    <div class="p-6 border border-slate-200 dark:border-h-teal/10 rounded-2xl hover:border-h-teal transition-all">
+                        <i data-lucide="lock" class="text-h-teal mb-3 w-5 h-5"></i>
+                        <h5 class="font-bold mb-2">Zero-Knowledge</h5>
+                        <p class="text-xs text-slate-400">Your identity is shielded through our proprietary privacy tunnel architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-slate-900 text-white relative">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-center text-4xl font-black mb-20 uppercase tracking-widest">Protocol <span class="text-h-teal">Evolution</span></h2>
+            <div class="space-y-12">
+                <div class="flex flex-col md:flex-row gap-8 border-l-2 border-h-teal/30 pl-8 relative" data-aos="fade-up">
+                    <div class="absolute w-4 h-4 bg-h-teal rounded-full -left-[9px] top-0 shadow-[0_0_15px_#0d9488]"></div>
+                    <span class="font-mono text-h-teal">2019</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Founding in Tallinn, Estonia</h4>
+                        <p class="text-slate-400 text-sm italic">Core team assembled from Baltic intelligence veterans to combat early BTC laundering rings.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 border-l-2 border-h-teal/30 pl-8 relative" data-aos="fade-up">
+                    <div class="absolute w-4 h-4 bg-h-teal rounded-full -left-[9px] top-0"></div>
+                    <span class="font-mono text-h-teal">2021</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Vortex Algorithm Launch</h4>
+                        <p class="text-slate-400 text-sm italic">Deployed the first AI-driven tracker capable of piercing Monero's ring signatures with 88% accuracy.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 border-l-2 border-h-teal/30 pl-8 relative" data-aos="fade-up">
+                    <div class="absolute w-4 h-4 bg-h-teal rounded-full -left-[9px] top-0"></div>
+                    <span class="font-mono text-h-teal">2024</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Federal Integration</h4>
+                        <p class="text-slate-400 text-sm italic">Signed direct data-sharing treaties with Interpol’s Cybercrime Directorate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="glass-panel p-12 rounded-[2.5rem] relative overflow-hidden group hover:-translate-y-2 transition-all duration-500" data-aos="fade-up">
+                <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <i data-lucide="shield-check" class="w-32 h-32"></i>
+                </div>
+                <h4 class="text-2xl font-black mb-4 uppercase text-h-teal">Legal Rigor</h4>
+                <p class="text-slate-500 leading-relaxed">We don't hack; we investigate. Every asset recovered is processed through a strict "Chain of Custody" protocol, making it usable in global courts.</p>
+            </div>
+            <div class="glass-panel p-12 rounded-[2.5rem] bg-h-teal/5 border-h-teal/30 group hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="100">
+                <h4 class="text-2xl font-black mb-4 uppercase text-h-teal">Total Stealth</h4>
+                <p class="text-slate-500 leading-relaxed">Our communication is PGP-encrypted. Our servers are distributed across jurisdictions without extradition treaties. Your case is invisible to the world.</p>
+            </div>
+            <div class="glass-panel p-12 rounded-[2.5rem] group hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
+                <h4 class="text-2xl font-black mb-4 uppercase text-h-teal">Asset Return</h4>
+                <p class="text-slate-500 leading-relaxed">Unlike most firms, we don't just "report." We utilize exchange relationships to freeze and return the actual tokens to your control.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 text-center relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-h-teal/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="relative z-10 px-6">
+            <h2 class="text-5xl md:text-7xl font-black mb-10 tracking-tighter">INITIATE <span class="text-h-teal">RECOVERY</span>?</h2>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="index.html" class="px-12 py-5 border border-slate-300 dark:border-white/20 font-bold rounded-full hover:bg-h-dark hover:text-white dark:hover:bg-white dark:hover:text-h-dark transition-all uppercase tracking-widest text-xs">Return to Dashboard</a>
+                <a href="http://wa.me/+447914612850" class="px-12 py-5 bg-h-teal text-white font-bold rounded-full shadow-2xl shadow-teal-500/40 hover:scale-110 transition-all uppercase tracking-widest text-xs">Deploy Agent</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-slate-100 dark:border-h-teal/10 text-center text-[10px] font-mono opacity-50 uppercase tracking-[0.3em] mb-10">
+        © 2026 HACKITE FEDERAL UNIT • ALL RIGHTS RESERVED • CLASSIFIED DATA
+    </footer>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        lucide.createIcons();
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Toggle Dark Mode from parent
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Parallax Effect for data lines
+        window.addEventListener('scroll', () => {
+            const lines = document.querySelector('.opacity-20');
+            let offset = window.pageYOffset;
+            if(lines) lines.style.transform = `translateY(${offset * 0.4}px)`;
+        });
+    </script>
+</body>
+</html>
